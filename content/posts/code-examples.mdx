@@ -1,0 +1,344 @@
+---
+title: "Code Snippets and Examples"
+date: "2025-12-28"
+description: "A collection of useful code snippets showcasing syntax highlighting across multiple languages including TypeScript, React, CSS, and more."
+tags: ["code", "snippets", "reference", "typescript", "react"]
+coverImage: ""
+draft: false
+featured: false
+---
+
+# Code Snippets and Examples
+
+This post showcases the syntax highlighting capabilities of this blog. All code blocks are powered by **Shiki** with the GitHub Dark theme for beautiful, accurate highlighting.
+
+## TypeScript Examples
+
+### Generic Utility Types
+
+```typescript
+// A utility type that makes all properties optional and nullable
+type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P] | null;
+};
+
+// Usage example
+interface User {
+  id: number;
+  profile: {
+    name: string;
+    email: string;
+    settings: {
+      theme: 'light' | 'dark';
+      notifications: boolean;
+    };
+  };
+}
+
+const partialUser: DeepPartial<User> = {
+  profile: {
+    name: 'John',
+    settings: {
+      theme: 'dark',
+    },
+  },
+};
+```
+
+### Async Error Handling
+
+```typescript
+// A wrapper for async functions that returns a tuple
+type Result<T, E = Error> = [T, null] | [null, E];
+
+async function tryCatch<T>(
+  promise: Promise<T>
+): Promise<Result<T>> {
+  try {
+    const data = await promise;
+    return [data, null];
+  } catch (error) {
+    return [null, error as Error];
+  }
+}
+
+// Usage
+async function fetchUser(id: string) {
+  const [user, error] = await tryCatch(
+    fetch(`/api/users/${id}`).then(res => res.json())
+  );
+
+  if (error) {
+    console.error('Failed to fetch user:', error.message);
+    return null;
+  }
+
+  return user;
+}
+```
+
+## React Components
+
+### Custom Hook with Cleanup
+
+```tsx
+import { useState, useEffect, useCallback } from 'react';
+
+interface UseFetchOptions<T> {
+  initialData?: T;
+  enabled?: boolean;
+}
+
+function useFetch<T>(url: string, options: UseFetchOptions<T> = {}) {
+  const { initialData, enabled = true } = options;
+
+  const [data, setData] = useState<T | undefined>(initialData);
+  const [error, setError] = useState<Error | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchData = useCallback(async () => {
+    if (!enabled) return;
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const json = await response.json();
+      setData(json);
+    } catch (e) {
+      setError(e instanceof Error ? e : new Error('Unknown error'));
+    } finally {
+      setIsLoading(false);
+    }
+  }, [url, enabled]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetchData();
+    return () => controller.abort();
+  }, [fetchData]);
+
+  return { data, error, isLoading, refetch: fetchData };
+}
+
+export default useFetch;
+```
+
+### Component with Animations
+
+```tsx
+'use client';
+
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+
+interface ToastProps {
+  message: string;
+  type: 'success' | 'error' | 'info';
+}
+
+export function Toast({ message, type }: ToastProps) {
+  const [isVisible, setIsVisible] = useState(true);
+
+  const colors = {
+    success: 'bg-green-500',
+    error: 'bg-red-500',
+    info: 'bg-blue-500',
+  };
+
+  return (
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          initial={{ opacity: 0, y: 50, scale: 0.3 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+          className={`${colors[type]} px-4 py-2 rounded-lg shadow-lg`}
+        >
+          <p className="text-white font-medium">{message}</p>
+          <button
+            onClick={() => setIsVisible(false)}
+            className="absolute top-1 right-2 text-white/80 hover:text-white"
+          >
+            ×
+          </button>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+```
+
+## CSS and Tailwind
+
+### Custom Tailwind Plugin
+
+```javascript
+// tailwind.config.js
+const plugin = require('tailwindcss/plugin');
+
+module.exports = {
+  plugins: [
+    plugin(function({ addUtilities, theme }) {
+      const newUtilities = {
+        '.text-gradient': {
+          'background': 'linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)',
+          '-webkit-background-clip': 'text',
+          '-webkit-text-fill-color': 'transparent',
+        },
+        '.glass': {
+          'background': 'rgba(255, 255, 255, 0.1)',
+          'backdrop-filter': 'blur(10px)',
+          'border': '1px solid rgba(255, 255, 255, 0.2)',
+        },
+      };
+      addUtilities(newUtilities);
+    }),
+  ],
+};
+```
+
+### CSS Grid Layout
+
+```css
+/* Modern responsive grid with named areas */
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: 250px 1fr 300px;
+  grid-template-rows: 60px 1fr 50px;
+  grid-template-areas:
+    "header header header"
+    "sidebar main aside"
+    "footer footer footer";
+  min-height: 100vh;
+  gap: 1rem;
+}
+
+.dashboard-layout > header { grid-area: header; }
+.dashboard-layout > aside:first-of-type { grid-area: sidebar; }
+.dashboard-layout > main { grid-area: main; }
+.dashboard-layout > aside:last-of-type { grid-area: aside; }
+.dashboard-layout > footer { grid-area: footer; }
+
+/* Responsive: Stack on mobile */
+@media (max-width: 768px) {
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "header"
+      "main"
+      "sidebar"
+      "aside"
+      "footer";
+  }
+}
+```
+
+## Terminal Commands
+
+### Common Git Operations
+
+```bash
+# Interactive rebase for the last 5 commits
+git rebase -i HEAD~5
+
+# Stash with a message and include untracked files
+git stash push -u -m "Work in progress: feature X"
+
+# Cherry-pick a range of commits
+git cherry-pick start_commit^..end_commit
+
+# Find which commit introduced a bug
+git bisect start
+git bisect bad HEAD
+git bisect good v1.0.0
+# Git will guide you through the rest
+
+# Clean up merged branches
+git branch --merged | grep -v "\*\|main\|master" | xargs -n 1 git branch -d
+```
+
+### Docker Commands
+
+```bash
+# Build and run with live reload for development
+docker compose -f docker-compose.dev.yml up --build
+
+# Execute a command in a running container
+docker exec -it container_name /bin/sh
+
+# Prune all unused resources
+docker system prune -a --volumes
+
+# View logs with timestamps and follow
+docker logs -f --timestamps container_name
+
+# Copy files from container to host
+docker cp container_name:/path/in/container ./local/path
+```
+
+## JSON Configuration
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}
+```
+
+## SQL Queries
+
+```sql
+-- Find users with their order statistics
+SELECT
+  u.id,
+  u.name,
+  u.email,
+  COUNT(o.id) as total_orders,
+  COALESCE(SUM(o.total), 0) as total_spent,
+  MAX(o.created_at) as last_order_date
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+WHERE u.created_at >= DATE_SUB(NOW(), INTERVAL 1 YEAR)
+GROUP BY u.id, u.name, u.email
+HAVING total_orders > 0
+ORDER BY total_spent DESC
+LIMIT 100;
+
+-- Create an index for better query performance
+CREATE INDEX idx_orders_user_created
+ON orders (user_id, created_at DESC);
+```
+
+<Callout type="info">
+All code snippets are ready to copy! Click the copy button that appears when you hover over any code block.
+</Callout>
+
+## Conclusion
+
+These examples demonstrate the variety of syntax highlighting available on this blog. The Shiki highlighter provides accurate, theme-consistent highlighting for all major programming languages.
+
+Feel free to use these snippets in your own projects!

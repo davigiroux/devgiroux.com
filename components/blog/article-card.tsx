@@ -1,0 +1,70 @@
+import Link from 'next/link';
+import Image from 'next/image';
+import { Calendar, Clock } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { TagBadge } from './tag-badge';
+
+interface ArticleCardProps {
+  slug: string;
+  title: string;
+  description: string;
+  date: string;
+  readingTime: string;
+  tags?: string[];
+  image?: string;
+}
+
+export function ArticleCard({
+  slug,
+  title,
+  description,
+  date,
+  readingTime,
+  tags = [],
+  image,
+}: ArticleCardProps) {
+  return (
+    <Link href={`/blog/${slug}`}>
+      <Card className="group overflow-hidden border-violet-500/20 bg-zinc-950/50 backdrop-blur transition-all hover:border-violet-400/50 hover:bg-zinc-900/50 hover:shadow-lg hover:shadow-violet-500/10">
+        {image && (
+          <div className="relative aspect-video w-full overflow-hidden">
+            <Image
+              src={image}
+              alt={title}
+              fill
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          </div>
+        )}
+        <div className="p-6">
+          <div className="mb-3 flex flex-wrap gap-2">
+            {tags.slice(0, 3).map((tag) => (
+              <TagBadge key={tag} tag={tag} />
+            ))}
+          </div>
+
+          <h3 className="mb-2 text-xl font-bold text-violet-50 transition-colors group-hover:text-violet-400">
+            {title}
+          </h3>
+
+          <p className="mb-4 line-clamp-2 text-sm text-zinc-400">{description}</p>
+
+          <div className="flex items-center gap-4 text-xs text-zinc-500">
+            <div className="flex items-center gap-1">
+              <Calendar className="h-3.5 w-3.5" />
+              <time dateTime={date}>{new Date(date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+              })}</time>
+            </div>
+            <div className="flex items-center gap-1">
+              <Clock className="h-3.5 w-3.5" />
+              <span>{readingTime}</span>
+            </div>
+          </div>
+        </div>
+      </Card>
+    </Link>
+  );
+}

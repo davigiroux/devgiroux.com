@@ -1,0 +1,214 @@
+---
+title: "How I Built This Blog with Next.js 15"
+date: "2025-12-29"
+description: "A technical walkthrough of building a modern blog with Next.js 15, MDX, and Tailwind CSS. Learn about the architecture, design decisions, and key features."
+tags: ["nextjs", "tutorial", "web-development", "react", "tailwindcss"]
+coverImage: ""
+draft: false
+featured: true
+---
+
+# How I Built This Blog with Next.js 15
+
+Building a personal blog is a rite of passage for developers. It's a chance to practice your skills, experiment with new technologies, and create something uniquely yours. In this post, I'll walk you through how I built this blog using modern web technologies.
+
+<Callout type="info">
+This is a comprehensive guide covering architecture, design decisions, and implementation details. Use the **Table of Contents** on the right to navigate to specific sections.
+</Callout>
+
+## The Tech Stack
+
+Before diving into the implementation, let's look at the technologies powering this blog:
+
+| Technology | Purpose |
+|------------|---------|
+| Next.js 15 | React framework with App Router |
+| MDX | Markdown with JSX components |
+| Tailwind CSS v4 | Utility-first styling |
+| TypeScript | Type-safe development |
+| Shiki | Syntax highlighting |
+| Fuse.js | Client-side search |
+
+## Project Structure
+
+The blog follows a well-organized structure that separates concerns clearly:
+
+```bash
+├── app/                    # Next.js App Router pages
+│   ├── blog/
+│   │   ├── [slug]/        # Dynamic blog post pages
+│   │   └── page.tsx       # Blog listing
+│   ├── tag/[tag]/         # Tag filtered views
+│   ├── api/               # API routes
+│   └── layout.tsx         # Root layout
+├── components/            # React components
+│   ├── blog/              # Blog-specific components
+│   ├── mdx/               # MDX custom components
+│   ├── search/            # Search functionality
+│   └── ui/                # Reusable UI components
+├── content/posts/         # MDX blog posts
+├── lib/                   # Utility functions
+└── public/                # Static assets
+```
+
+## Content Management with MDX
+
+One of the key decisions was using MDX for content. MDX allows writing Markdown while embedding React components directly in the content.
+
+<Callout type="tip">
+MDX combines the simplicity of Markdown with the power of React components. Perfect for technical blogs!
+</Callout>
+
+### Frontmatter Schema
+
+Each post includes frontmatter metadata:
+
+```yaml
+---
+title: "Post Title"
+date: "2025-12-30"
+description: "A brief description for SEO"
+tags: ["tag1", "tag2"]
+coverImage: "/images/cover.jpg"  # Optional
+draft: false                      # Hidden if true
+featured: true                    # Shows on homepage
+---
+```
+
+### Custom Components
+
+I created several custom MDX components to enhance the reading experience:
+
+```tsx
+// Callout component for important notes
+<Callout type="info">
+  This is an informational callout!
+</Callout>
+
+// YouTube embed
+<YouTubeEmbed videoId="dQw4w9WgXcQ" />
+
+// Code blocks with syntax highlighting
+// Powered by Shiki with the GitHub Dark theme
+```
+
+## Implementing Search
+
+The search functionality uses Fuse.js for fast, client-side fuzzy searching:
+
+```typescript
+import Fuse from 'fuse.js';
+
+const fuse = new Fuse(posts, {
+  keys: [
+    { name: 'title', weight: 2 },
+    { name: 'description', weight: 1.5 },
+    { name: 'tags', weight: 1.5 },
+    { name: 'content', weight: 1 },
+  ],
+  threshold: 0.3,
+  includeMatches: true,
+});
+```
+
+The search dialog is triggered with `Ctrl+K` (or `Cmd+K` on Mac), providing a familiar experience for developers.
+
+## Static Generation and SEO
+
+Next.js 15's static generation ensures excellent performance and SEO:
+
+```typescript
+// Generate static paths at build time
+export async function generateStaticParams() {
+  const posts = getAllPosts();
+  return posts.map((post) => ({ slug: post.slug }));
+}
+
+// Generate metadata for each post
+export async function generateMetadata({ params }) {
+  const post = getPostBySlug(params.slug);
+  return {
+    title: post.frontmatter.title,
+    description: post.frontmatter.description,
+    openGraph: {
+      type: 'article',
+      // ... more metadata
+    },
+  };
+}
+```
+
+### SEO Features
+
+The blog includes comprehensive SEO optimization:
+
+- **Dynamic Sitemap** — Automatically includes all posts and tags
+- **RSS Feed** — Subscribe at `/feed.xml`
+- **Dynamic OG Images** — Generated for each post
+- **JSON-LD** — Structured data for rich search results
+
+<Callout type="warning">
+Remember to update `lib/config.ts` with your actual site URL before deploying!
+</Callout>
+
+## Styling with Tailwind CSS v4
+
+Tailwind CSS v4 brings significant improvements:
+
+```css
+/* Electric Violet theme colors */
+:root {
+  --primary: #8b5cf6;
+  --background: #0a0a0f;
+  --foreground: #f1f5f9;
+}
+
+/* Article content styling */
+.article-content {
+  font-size: 1.125rem;
+  line-height: 1.75;
+}
+```
+
+The design follows an "Electric Violet" theme with a dark background and purple accents, creating a modern, developer-friendly aesthetic.
+
+## Performance Optimizations
+
+Several optimizations ensure fast load times:
+
+1. **Static Generation** — Pages pre-rendered at build time
+2. **Image Optimization** — Next.js automatic image optimization
+3. **Code Splitting** — Automatic per-route code splitting
+4. **Font Optimization** — Using `next/font` for optimal loading
+
+## Deployment
+
+The blog is designed to deploy seamlessly to Vercel:
+
+```bash
+# Push to GitHub
+git add .
+git commit -m "Deploy blog"
+git push origin main
+
+# Vercel auto-deploys from main branch
+```
+
+## What's Next?
+
+Future improvements I'm planning:
+
+- [ ] Add view counters with edge functions
+- [ ] Implement newsletter subscription
+- [ ] Add related posts suggestions
+- [ ] Create a portfolio section
+
+<Callout type="info">
+Want to build your own? Check out the source code on GitHub for the complete implementation!
+</Callout>
+
+## Conclusion
+
+Building this blog was a great learning experience. Next.js 15 with the App Router provides an excellent foundation for content-focused sites, and MDX makes writing technical content enjoyable.
+
+Feel free to explore the codebase and adapt it for your own projects. Happy coding!
