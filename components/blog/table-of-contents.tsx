@@ -77,10 +77,10 @@ export function TableOfContents({ selector = 'article' }: TableOfContentsProps) 
 
   return (
     <nav className="sticky top-20 hidden lg:block">
-      <div className="rounded-lg border border-violet-500/20 bg-zinc-950/50 backdrop-blur">
+      <div className="rounded-lg border border-border bg-card backdrop-blur">
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="flex w-full items-center justify-between p-4 text-sm font-semibold text-violet-50 hover:text-violet-400 transition-colors lg:cursor-default"
+          className="flex w-full items-center justify-between p-4 text-sm font-semibold text-foreground hover:text-primary transition-colors lg:cursor-default"
           aria-expanded={!isCollapsed}
         >
           <span>Table of Contents</span>
@@ -102,8 +102,8 @@ export function TableOfContents({ selector = 'article' }: TableOfContentsProps) 
                   onClick={(e) => handleClick(e, id)}
                   className={`block py-1.5 text-sm transition-colors ${
                     activeId === id
-                      ? 'font-medium text-violet-400 border-l-2 border-violet-400 pl-3 -ml-3'
-                      : 'text-zinc-400 hover:text-violet-300'
+                      ? 'font-medium text-primary border-l-2 border-primary pl-3 -ml-3'
+                      : 'text-muted-foreground hover:text-primary'
                   }`}
                 >
                   {text}

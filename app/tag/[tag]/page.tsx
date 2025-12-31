@@ -42,14 +42,14 @@ export default async function TagPage({ params }: TagPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950">
+    <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-16 sm:py-24">
         {/* Back Button */}
         <div className="mb-8">
           <Button
             asChild
             variant="ghost"
-            className="text-zinc-400 hover:text-violet-400"
+            className="text-muted-foreground hover:text-primary"
           >
             <Link href="/blog">
               <ArrowLeft className="mr-2 h-4 w-4" />
@@ -60,18 +60,18 @@ export default async function TagPage({ params }: TagPageProps) {
 
         {/* Header */}
         <div className="mb-12">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-violet-500/20 bg-violet-500/10 px-4 py-2 text-sm font-medium text-violet-300">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
             <TagIcon className="h-4 w-4" />
             <span>Tag</span>
           </div>
 
-          <h1 className="text-4xl font-bold text-violet-50 sm:text-5xl">
+          <h1 className="text-4xl font-bold text-foreground sm:text-5xl">
             {decodedTag}
           </h1>
 
-          <p className="mt-4 text-lg text-zinc-400">
+          <p className="mt-4 text-lg text-muted-foreground">
             {posts.length} {posts.length === 1 ? 'article' : 'articles'} tagged with{' '}
-            <span className="text-violet-400">{decodedTag}</span>
+            <span className="text-primary">{decodedTag}</span>
           </p>
         </div>
 

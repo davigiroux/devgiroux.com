@@ -17,7 +17,7 @@ function CustomLink({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-violet-500 hover:text-violet-400 underline decoration-violet-500/30 hover:decoration-violet-400/50 transition-colors"
+        className="text-primary hover:text-primary/80 underline decoration-primary/30 hover:decoration-primary/50 transition-colors"
         {...props}
       >
         {children}
@@ -28,7 +28,7 @@ function CustomLink({
   return (
     <Link
       href={href || ""}
-      className="text-violet-500 hover:text-violet-400 underline decoration-violet-500/30 hover:decoration-violet-400/50 transition-colors"
+      className="text-primary hover:text-primary/80 underline decoration-primary/30 hover:decoration-primary/50 transition-colors"
       {...props}
     >
       {children}
@@ -46,7 +46,7 @@ function CustomImage({ src, alt }: { src?: string; alt?: string }) {
         alt={alt || ""}
         width={800}
         height={400}
-        className="rounded-lg border border-violet-500/20"
+        className="rounded-lg border border-border"
       />
     </span>
   );
@@ -55,7 +55,7 @@ function CustomImage({ src, alt }: { src?: string; alt?: string }) {
 function InlineCode({ children, ...props }: React.HTMLAttributes<HTMLElement>) {
   return (
     <code
-      className="rounded bg-violet-500/10 px-2 py-1 text-base font-mono text-violet-400 border border-violet-500/20"
+      className="rounded bg-primary/10 px-2 py-1 text-base font-mono text-primary border border-primary/20"
       {...props}
     >
       {children}
@@ -77,7 +77,7 @@ const createHeading = (level: 1 | 2 | 3 | 4 | 5 | 6) => {
     children,
     ...props
   }: React.HTMLAttributes<HTMLHeadingElement>) => {
-    const className = `${headingStyles[level]} text-violet-50 scroll-mt-20`;
+    const className = `${headingStyles[level]} text-foreground scroll-mt-20`;
 
     switch (level) {
       case 1:
@@ -139,7 +139,7 @@ export const MDXComponents = {
     ...props
   }: React.BlockquoteHTMLAttributes<HTMLQuoteElement>) => (
     <blockquote
-      className="border-l-4 border-violet-500 pl-6 italic my-8 text-zinc-400 text-lg leading-relaxed"
+      className="border-l-4 border-primary pl-6 italic my-8 text-muted-foreground text-lg leading-relaxed"
       {...props}
     >
       {children}
@@ -147,7 +147,7 @@ export const MDXComponents = {
   ),
   ul: ({ children, ...props }: React.HTMLAttributes<HTMLUListElement>) => (
     <ul
-      className="space-y-3 my-8 ml-6 text-zinc-300 text-lg leading-relaxed list-disc"
+      className="space-y-3 my-8 ml-6 text-foreground text-lg leading-relaxed list-disc"
       {...props}
     >
       {children}
@@ -155,7 +155,7 @@ export const MDXComponents = {
   ),
   ol: ({ children, ...props }: React.OlHTMLAttributes<HTMLOListElement>) => (
     <ol
-      className="space-y-3 my-8 ml-6 text-zinc-300 text-lg leading-relaxed list-decimal"
+      className="space-y-3 my-8 ml-6 text-foreground text-lg leading-relaxed list-decimal"
       {...props}
     >
       {children}
@@ -167,12 +167,12 @@ export const MDXComponents = {
     </li>
   ),
   p: ({ children, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
-    <p className="mb-6 text-zinc-300 text-lg leading-relaxed" {...props}>
+    <p className="mb-6 text-foreground text-lg leading-relaxed" {...props}>
       {children}
     </p>
   ),
   hr: ({ ...props }: React.HTMLAttributes<HTMLHRElement>) => (
-    <hr className="my-12 border-violet-500/20" {...props} />
+    <hr className="my-12 border-border" {...props} />
   ),
   table: ({
     children,
@@ -180,7 +180,7 @@ export const MDXComponents = {
   }: React.TableHTMLAttributes<HTMLTableElement>) => (
     <div className="my-6 overflow-x-auto">
       <table
-        className="w-full border-collapse border border-violet-500/20"
+        className="w-full border-collapse border border-border"
         {...props}
       >
         {children}
@@ -192,7 +192,7 @@ export const MDXComponents = {
     ...props
   }: React.ThHTMLAttributes<HTMLTableCellElement>) => (
     <th
-      className="border border-violet-500/20 bg-violet-500/10 px-4 py-2 text-left font-semibold text-violet-50"
+      className="border border-border bg-primary/10 px-4 py-2 text-left font-semibold text-foreground"
       {...props}
     >
       {children}
@@ -203,7 +203,7 @@ export const MDXComponents = {
     ...props
   }: React.TdHTMLAttributes<HTMLTableCellElement>) => (
     <td
-      className="border border-violet-500/20 px-4 py-2 text-zinc-300"
+      className="border border-border px-4 py-2 text-foreground"
       {...props}
     >
       {children}
@@ -212,12 +212,12 @@ export const MDXComponents = {
   YouTubeEmbed,
   Callout,
   strong: ({ children, ...props }: React.HTMLAttributes<HTMLElement>) => (
-    <strong className="font-bold text-violet-50" {...props}>
+    <strong className="font-bold text-foreground" {...props}>
       {children}
     </strong>
   ),
   em: ({ children, ...props }: React.HTMLAttributes<HTMLElement>) => (
-    <em className="italic text-zinc-300" {...props}>
+    <em className="italic text-foreground" {...props}>
       {children}
     </em>
   ),

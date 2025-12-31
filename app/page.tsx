@@ -17,13 +17,13 @@ export default function HomePage() {
 
       {/* Featured Posts */}
       {featuredPosts.length > 0 && (
-        <section className="border-b border-violet-500/20 bg-zinc-950 py-16 sm:py-24">
+        <section className="border-b border-border bg-background py-16 sm:py-24">
           <div className="container mx-auto px-4">
             <div className="mb-12">
-              <h2 className="text-3xl font-bold text-violet-50 sm:text-4xl">
+              <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
                 Featured Articles
               </h2>
-              <p className="mt-2 text-zinc-400">
+              <p className="mt-2 text-muted-foreground">
                 Handpicked posts you shouldn't miss
               </p>
             </div>
@@ -47,21 +47,21 @@ export default function HomePage() {
       )}
 
       {/* Latest Articles */}
-      <section id="latest" className="border-b border-violet-500/20 bg-zinc-900 py-16 sm:py-24">
+      <section id="latest" className="border-b border-border bg-surface py-16 sm:py-24">
         <div className="container mx-auto px-4">
           <div className="mb-12 flex items-end justify-between">
             <div>
-              <h2 className="text-3xl font-bold text-violet-50 sm:text-4xl">
+              <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
                 Latest Articles
               </h2>
-              <p className="mt-2 text-zinc-400">
+              <p className="mt-2 text-muted-foreground">
                 Fresh insights and tutorials
               </p>
             </div>
             <Button
               asChild
               variant="ghost"
-              className="hidden text-violet-400 hover:text-violet-300 sm:flex"
+              className="hidden text-primary hover:text-primary/80 sm:flex"
             >
               <Link href="/blog">
                 View all
@@ -98,13 +98,13 @@ export default function HomePage() {
 
       {/* Tags Cloud */}
       {tags.length > 0 && (
-        <section className="bg-zinc-950 py-16 sm:py-24">
+        <section className="bg-background py-16 sm:py-24">
           <div className="container mx-auto px-4">
             <div className="mb-12">
-              <h2 className="text-3xl font-bold text-violet-50 sm:text-4xl">
+              <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
                 Explore by Topic
               </h2>
-              <p className="mt-2 text-zinc-400">
+              <p className="mt-2 text-muted-foreground">
                 Browse articles by category
               </p>
             </div>

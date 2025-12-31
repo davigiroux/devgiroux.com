@@ -76,7 +76,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const url = `${siteConfig.url}/blog/${slug}`;
 
   return (
-    <div className="min-h-screen bg-zinc-950">
+    <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-12">
         <div className="mx-auto max-w-7xl">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_250px]">
@@ -94,7 +94,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 {content}
               </article>
 
-              <div className="mt-12 border-t border-violet-500/20 pt-8">
+              <div className="mt-12 border-t border-border pt-8">
                 <ShareButtons
                   url={url}
                   title={post.frontmatter.title}

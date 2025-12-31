@@ -26,7 +26,7 @@ export async function GET(
             justifyContent: 'center',
             backgroundColor: '#0a0a0f',
             backgroundImage:
-              'radial-gradient(circle at 25% 25%, rgba(139, 92, 246, 0.15) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.1) 0%, transparent 50%)',
+              'radial-gradient(circle at 25% 25%, rgba(6, 182, 212, 0.15) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(6, 182, 212, 0.1) 0%, transparent 50%)',
           }}
         >
           <div
@@ -41,7 +41,7 @@ export async function GET(
               style={{
                 fontSize: 80,
                 fontWeight: 700,
-                background: 'linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%)',
+                background: 'linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%)',
                 backgroundClip: 'text',
                 color: 'transparent',
                 marginBottom: 20,
@@ -111,7 +111,7 @@ export async function GET(
             flexDirection: 'column',
             backgroundColor: '#0a0a0f',
             backgroundImage:
-              'radial-gradient(circle at 25% 25%, rgba(139, 92, 246, 0.15) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.1) 0%, transparent 50%)',
+              'radial-gradient(circle at 25% 25%, rgba(6, 182, 212, 0.15) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(6, 182, 212, 0.1) 0%, transparent 50%)',
             padding: 60,
           }}
         >
@@ -127,12 +127,12 @@ export async function GET(
               <span
                 key={tag}
                 style={{
-                  backgroundColor: 'rgba(139, 92, 246, 0.2)',
-                  color: '#a78bfa',
+                  backgroundColor: 'rgba(6, 182, 212, 0.2)',
+                  color: '#22d3ee',
                   padding: '8px 16px',
                   borderRadius: 20,
                   fontSize: 20,
-                  border: '1px solid rgba(139, 92, 246, 0.3)',
+                  border: '1px solid rgba(6, 182, 212, 0.3)',
                 }}
               >
                 {tag}
@@ -189,7 +189,7 @@ export async function GET(
                   width: 48,
                   height: 48,
                   borderRadius: 24,
-                  backgroundColor: '#8b5cf6',
+                  backgroundColor: '#06b6d4',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -234,14 +234,14 @@ export async function GET(
           justifyContent: 'center',
           backgroundColor: '#0a0a0f',
           backgroundImage:
-            'radial-gradient(circle at 25% 25%, rgba(139, 92, 246, 0.15) 0%, transparent 50%)',
+            'radial-gradient(circle at 25% 25%, rgba(6, 182, 212, 0.15) 0%, transparent 50%)',
         }}
       >
         <h1
           style={{
             fontSize: 64,
             fontWeight: 700,
-            background: 'linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%)',
+            background: 'linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%)',
             backgroundClip: 'text',
             color: 'transparent',
           }}

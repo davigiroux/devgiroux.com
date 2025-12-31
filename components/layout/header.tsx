@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "./theme-toggle"
 import { siteConfig } from "@/lib/config"
+import { useSearch } from "@/components/search"
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -17,14 +18,7 @@ const navItems = [
 export function Header() {
   const pathname = usePathname()
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
-
-  const openSearch = React.useCallback(() => {
-    const event = new KeyboardEvent("keydown", {
-      key: "k",
-      metaKey: true,
-    })
-    document.dispatchEvent(event)
-  }, [])
+  const { openSearch } = useSearch()
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md">
@@ -33,7 +27,7 @@ export function Header() {
           href="/"
           className="flex items-center space-x-2 text-xl font-semibold transition-colors hover:text-primary"
         >
-          <span className="bg-gradient-to-r from-primary to-violet-400 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">
             {siteConfig.name}
           </span>
         </Link>

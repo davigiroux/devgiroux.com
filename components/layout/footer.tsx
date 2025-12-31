@@ -21,7 +21,7 @@ export function Footer() {
               href="/"
               className="text-lg font-semibold transition-colors hover:text-primary"
             >
-              <span className="bg-gradient-to-r from-primary to-violet-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">
                 {siteConfig.name}
               </span>
             </Link>

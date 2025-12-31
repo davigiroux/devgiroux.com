@@ -124,7 +124,7 @@ export function SearchDialog({ posts, open, onOpenChange }: SearchDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl p-0 gap-0 border-violet-500/20 bg-zinc-950" showCloseButton={false}>
+      <DialogContent className="max-w-2xl p-0 gap-0 border-primary/20 bg-zinc-950" showCloseButton={false}>
         <DialogHeader className="p-4 pb-0">
           <DialogTitle className="sr-only">Search blog posts</DialogTitle>
           <div className="relative flex items-center">
@@ -136,12 +136,12 @@ export function SearchDialog({ posts, open, onOpenChange }: SearchDialogProps) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="pl-10 pr-10 border-violet-500/20 bg-zinc-900 text-violet-50 placeholder:text-zinc-500 focus-visible:ring-violet-400"
+              className="pl-10 pr-10 border-primary/20 bg-zinc-900 text-foreground placeholder:text-zinc-500 focus-visible:ring-primary"
             />
             {query && (
               <button
                 onClick={handleClear}
-                className="absolute right-3 text-zinc-400 hover:text-violet-400 transition-colors"
+                className="absolute right-3 text-zinc-400 hover:text-primary transition-colors"
                 aria-label="Clear search"
               >
                 <X className="h-4 w-4" />
@@ -183,11 +183,11 @@ export function SearchDialog({ posts, open, onOpenChange }: SearchDialogProps) {
                   onClick={() => handleSelectPost(result.item)}
                   className={`w-full text-left rounded-lg border p-4 transition-all ${
                     index === selectedIndex
-                      ? 'border-violet-400 bg-violet-500/10 shadow-md'
-                      : 'border-violet-500/20 bg-zinc-900/50 hover:border-violet-400/50 hover:bg-zinc-900'
+                      ? 'border-primary bg-primary/10 shadow-md'
+                      : 'border-primary/20 bg-zinc-900/50 hover:border-primary/50 hover:bg-zinc-900'
                   }`}
                 >
-                  <h3 className="font-semibold text-violet-50 mb-1 line-clamp-1">
+                  <h3 className="font-semibold text-foreground mb-1 line-clamp-1">
                     {result.item.title}
                   </h3>
                   <p className="text-sm text-zinc-400 mb-3 line-clamp-2">
@@ -206,7 +206,7 @@ export function SearchDialog({ posts, open, onOpenChange }: SearchDialogProps) {
                     </div>
                     {result.item.tags.length > 0 && (
                       <>
-                        <span className="text-violet-500/30">•</span>
+                        <span className="text-primary/30">•</span>
                         <div className="flex items-center gap-1">
                           <Tag className="h-3 w-3" />
                           <span>{result.item.tags.slice(0, 2).join(', ')}</span>
@@ -220,23 +220,23 @@ export function SearchDialog({ posts, open, onOpenChange }: SearchDialogProps) {
           )}
         </div>
 
-        <div className="border-t border-violet-500/20 p-3 px-4">
+        <div className="border-t border-primary/20 p-3 px-4">
           <div className="flex items-center justify-between text-xs text-zinc-500">
             <div className="flex items-center gap-4">
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 rounded bg-zinc-900 border border-violet-500/20 text-zinc-400">
+                <kbd className="px-1.5 py-0.5 rounded bg-zinc-900 border border-primary/20 text-zinc-400">
                   ↑↓
                 </kbd>
                 Navigate
               </span>
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 rounded bg-zinc-900 border border-violet-500/20 text-zinc-400">
+                <kbd className="px-1.5 py-0.5 rounded bg-zinc-900 border border-primary/20 text-zinc-400">
                   ↵
                 </kbd>
                 Select
               </span>
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 rounded bg-zinc-900 border border-violet-500/20 text-zinc-400">
+                <kbd className="px-1.5 py-0.5 rounded bg-zinc-900 border border-primary/20 text-zinc-400">
                   Esc
                 </kbd>
                 Close

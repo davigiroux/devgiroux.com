@@ -33,7 +33,7 @@ export function SearchTrigger({
       <Search className="h-4 w-4" />
       {size !== 'icon' && <span>Search</span>}
       {showShortcut && size !== 'icon' && (
-        <kbd className="pointer-events-none hidden h-5 select-none items-center gap-1 rounded border border-violet-500/20 bg-violet-500/10 px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
+        <kbd className="pointer-events-none hidden h-5 select-none items-center gap-1 rounded border border-primary/20 bg-primary/10 px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
           {shortcut}
         </kbd>
       )}

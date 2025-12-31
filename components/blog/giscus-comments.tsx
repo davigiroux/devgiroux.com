@@ -37,7 +37,7 @@ export function GiscusComments({
     // Show placeholder if not configured
     if (!repoId || !categoryId) {
       const placeholder = document.createElement('div');
-      placeholder.className = 'rounded-lg border border-violet-500/20 bg-zinc-950/50 p-8 text-center';
+      placeholder.className = 'rounded-lg border border-primary/20 bg-zinc-950/50 p-8 text-center';
       placeholder.innerHTML = `
         <p class="text-zinc-400 mb-2">Comments are not configured yet.</p>
         <p class="text-sm text-zinc-500">
@@ -47,7 +47,7 @@ export function GiscusComments({
           href="https://giscus.app"
           target="_blank"
           rel="noopener noreferrer"
-          class="mt-4 inline-block text-violet-400 hover:text-violet-300 underline"
+          class="mt-4 inline-block text-cyan-500 hover:text-cyan-400 underline"
         >
           Learn how to set up Giscus →
         </a>
@@ -109,7 +109,7 @@ export function GiscusComments({
 
   return (
     <div className="mt-12">
-      <h2 className="mb-6 text-2xl font-bold text-violet-50">Comments</h2>
+      <h2 className="mb-6 text-2xl font-bold text-foreground">Comments</h2>
       <div ref={ref} className="giscus" />
     </div>
   );

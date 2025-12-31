@@ -22,17 +22,17 @@ export function ArticleHeader({
   return (
     <header className="mb-12">
       <div className="mb-8">
-        <h1 className="mb-6 text-4xl font-bold text-violet-50 sm:text-5xl lg:text-6xl">
+        <h1 className="mb-6 text-4xl font-bold text-foreground sm:text-5xl lg:text-6xl">
           {title}
         </h1>
 
-        <div className="flex flex-wrap items-center gap-4 text-sm text-zinc-400">
+        <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
             <User className="h-4 w-4" />
             <span>{author}</span>
           </div>
 
-          <div className="h-4 w-px bg-violet-500/20" />
+          <div className="h-4 w-px bg-border" />
 
           <div className="flex items-center gap-2">
             <Calendar className="h-4 w-4" />
@@ -45,7 +45,7 @@ export function ArticleHeader({
             </time>
           </div>
 
-          <div className="h-4 w-px bg-violet-500/20" />
+          <div className="h-4 w-px bg-border" />
 
           <div className="flex items-center gap-2">
             <Clock className="h-4 w-4" />
@@ -63,7 +63,7 @@ export function ArticleHeader({
       </div>
 
       {image && (
-        <div className="relative aspect-video w-full overflow-hidden rounded-lg border border-violet-500/20">
+        <div className="relative aspect-video w-full overflow-hidden rounded-lg border border-border">
           <Image
             src={image}
             alt={title}

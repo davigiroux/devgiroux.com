@@ -8,23 +8,23 @@ interface CalloutProps {
 export function Callout({ type = 'info', children }: CalloutProps) {
   const styles = {
     info: {
-      container: 'bg-blue-500/10 border-blue-500/30 text-blue-100',
-      icon: 'text-blue-400',
+      container: 'bg-blue-500/10 border-blue-500/30 text-blue-900 dark:text-blue-100',
+      icon: 'text-blue-600 dark:text-blue-400',
       Icon: Info,
     },
     tip: {
-      container: 'bg-green-500/10 border-green-500/30 text-green-100',
-      icon: 'text-green-400',
+      container: 'bg-green-500/10 border-green-500/30 text-green-900 dark:text-green-100',
+      icon: 'text-green-600 dark:text-green-400',
       Icon: Lightbulb,
     },
     warning: {
-      container: 'bg-yellow-500/10 border-yellow-500/30 text-yellow-100',
-      icon: 'text-yellow-400',
+      container: 'bg-yellow-500/10 border-yellow-500/30 text-yellow-900 dark:text-yellow-100',
+      icon: 'text-yellow-600 dark:text-yellow-400',
       Icon: AlertTriangle,
     },
     error: {
-      container: 'bg-red-500/10 border-red-500/30 text-red-100',
-      icon: 'text-red-400',
+      container: 'bg-red-500/10 border-red-500/30 text-red-900 dark:text-red-100',
+      icon: 'text-red-600 dark:text-red-400',
       Icon: AlertCircle,
     },
   };

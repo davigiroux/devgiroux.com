@@ -35,14 +35,14 @@ export function CodeBlock({ children, ...props }: CodeBlockProps & React.HTMLAtt
         size="sm"
         variant="ghost"
         onClick={handleCopy}
-        className="absolute right-2 top-2 opacity-0 group-hover:opacity-100 transition-opacity z-10 h-8 w-8 p-0 text-zinc-400 hover:text-white hover:bg-zinc-800"
+        className="absolute right-2 top-2 opacity-0 group-hover:opacity-100 transition-opacity z-10 h-8 w-8 p-0 text-zinc-400 hover:text-white hover:bg-zinc-700"
         aria-label="Copy code"
       >
         {copied ? <Check className="h-4 w-4 text-green-400" /> : <Copy className="h-4 w-4" />}
       </Button>
       <pre
         ref={preRef}
-        className="overflow-x-auto rounded-lg border border-violet-500/20 bg-zinc-950 p-4 text-sm"
+        className="overflow-x-auto rounded-lg border border-border bg-code p-4 text-sm"
         {...props}
       >
         {children}

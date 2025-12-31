@@ -25,7 +25,7 @@ export function ArticleCard({
 }: ArticleCardProps) {
   return (
     <Link href={`/blog/${slug}`}>
-      <Card className="group overflow-hidden border-violet-500/20 bg-zinc-950/50 backdrop-blur transition-all hover:border-violet-400/50 hover:bg-zinc-900/50 hover:shadow-lg hover:shadow-violet-500/10">
+      <Card className="group overflow-hidden border-border bg-card backdrop-blur transition-all hover:border-primary/50 hover:bg-surface-hover hover:shadow-lg hover:shadow-primary/10">
         {image && (
           <div className="relative aspect-video w-full overflow-hidden">
             <Image
@@ -43,13 +43,13 @@ export function ArticleCard({
             ))}
           </div>
 
-          <h3 className="mb-2 text-xl font-bold text-violet-50 transition-colors group-hover:text-violet-400">
+          <h3 className="mb-2 text-xl font-bold text-foreground transition-colors group-hover:text-primary">
             {title}
           </h3>
 
-          <p className="mb-4 line-clamp-2 text-sm text-zinc-400">{description}</p>
+          <p className="mb-4 line-clamp-2 text-sm text-muted-foreground">{description}</p>
 
-          <div className="flex items-center gap-4 text-xs text-zinc-500">
+          <div className="flex items-center gap-4 text-xs text-muted-foreground">
             <div className="flex items-center gap-1">
               <Calendar className="h-3.5 w-3.5" />
               <time dateTime={date}>{new Date(date).toLocaleDateString('en-US', {

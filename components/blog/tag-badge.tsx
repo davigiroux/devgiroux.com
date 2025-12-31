@@ -17,7 +17,7 @@ export function TagBadge({ tag, count, variant = 'secondary', href, onClick }: T
     </>
   );
 
-  const badgeClasses = "transition-colors hover:bg-violet-500/20 hover:border-violet-400/50";
+  const badgeClasses = "transition-colors hover:bg-primary/20 hover:border-primary/50";
 
   if (href) {
     return (

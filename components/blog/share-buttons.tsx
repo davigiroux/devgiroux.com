@@ -35,7 +35,7 @@ export function ShareButtons({ url, title, description = '' }: ShareButtonsProps
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-2 text-sm font-medium text-violet-50">
+      <div className="flex items-center gap-2 text-sm font-medium text-foreground">
         <Share2 className="h-4 w-4" />
         <span>Share this article</span>
       </div>
@@ -45,7 +45,7 @@ export function ShareButtons({ url, title, description = '' }: ShareButtonsProps
           size="sm"
           variant="outline"
           onClick={() => handleShare('twitter')}
-          className="border-violet-500/20 hover:border-violet-400/50 hover:bg-violet-500/10"
+          className="border-primary/20 hover:border-primary/50 hover:bg-primary/10"
           aria-label="Share on Twitter"
         >
           <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -58,7 +58,7 @@ export function ShareButtons({ url, title, description = '' }: ShareButtonsProps
           size="sm"
           variant="outline"
           onClick={() => handleShare('linkedin')}
-          className="border-violet-500/20 hover:border-violet-400/50 hover:bg-violet-500/10"
+          className="border-primary/20 hover:border-primary/50 hover:bg-primary/10"
           aria-label="Share on LinkedIn"
         >
           <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -71,7 +71,7 @@ export function ShareButtons({ url, title, description = '' }: ShareButtonsProps
           size="sm"
           variant="outline"
           onClick={() => handleShare('whatsapp')}
-          className="border-violet-500/20 hover:border-violet-400/50 hover:bg-violet-500/10"
+          className="border-primary/20 hover:border-primary/50 hover:bg-primary/10"
           aria-label="Share on WhatsApp"
         >
           <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -84,7 +84,7 @@ export function ShareButtons({ url, title, description = '' }: ShareButtonsProps
           size="sm"
           variant="outline"
           onClick={handleCopyLink}
-          className="border-violet-500/20 hover:border-violet-400/50 hover:bg-violet-500/10"
+          className="border-primary/20 hover:border-primary/50 hover:bg-primary/10"
           aria-label="Copy link"
         >
           {copied ? (
