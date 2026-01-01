@@ -1,0 +1,345 @@
+---
+title: "Snippets de Código e Exemplos"
+date: "2025-12-28"
+description: "Uma coleção de snippets de código úteis demonstrando syntax highlighting em múltiplas linguagens incluindo TypeScript, React, CSS e mais."
+tags: ["codigo", "snippets", "referencia", "typescript", "react"]
+coverImage: ""
+draft: false
+featured: false
+lang: "pt-BR"
+---
+
+# Snippets de Código e Exemplos
+
+Este post demonstra as capacidades de syntax highlighting deste blog. Todos os blocos de código são alimentados pelo **Shiki** com o tema GitHub Dark para highlighting bonito e preciso.
+
+## Exemplos TypeScript
+
+### Tipos Utilitários Genéricos
+
+```typescript
+// Um tipo utilitário que torna todas as propriedades opcionais e anuláveis
+type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P] | null;
+};
+
+// Exemplo de uso
+interface User {
+  id: number;
+  profile: {
+    name: string;
+    email: string;
+    settings: {
+      theme: 'light' | 'dark';
+      notifications: boolean;
+    };
+  };
+}
+
+const partialUser: DeepPartial<User> = {
+  profile: {
+    name: 'John',
+    settings: {
+      theme: 'dark',
+    },
+  },
+};
+```
+
+### Tratamento de Erros Assíncronos
+
+```typescript
+// Um wrapper para funções assíncronas que retorna uma tupla
+type Result<T, E = Error> = [T, null] | [null, E];
+
+async function tryCatch<T>(
+  promise: Promise<T>
+): Promise<Result<T>> {
+  try {
+    const data = await promise;
+    return [data, null];
+  } catch (error) {
+    return [null, error as Error];
+  }
+}
+
+// Uso
+async function fetchUser(id: string) {
+  const [user, error] = await tryCatch(
+    fetch(`/api/users/${id}`).then(res => res.json())
+  );
+
+  if (error) {
+    console.error('Falha ao buscar usuário:', error.message);
+    return null;
+  }
+
+  return user;
+}
+```
+
+## Componentes React
+
+### Hook Customizado com Cleanup
+
+```tsx
+import { useState, useEffect, useCallback } from 'react';
+
+interface UseFetchOptions<T> {
+  initialData?: T;
+  enabled?: boolean;
+}
+
+function useFetch<T>(url: string, options: UseFetchOptions<T> = {}) {
+  const { initialData, enabled = true } = options;
+
+  const [data, setData] = useState<T | undefined>(initialData);
+  const [error, setError] = useState<Error | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchData = useCallback(async () => {
+    if (!enabled) return;
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const json = await response.json();
+      setData(json);
+    } catch (e) {
+      setError(e instanceof Error ? e : new Error('Unknown error'));
+    } finally {
+      setIsLoading(false);
+    }
+  }, [url, enabled]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetchData();
+    return () => controller.abort();
+  }, [fetchData]);
+
+  return { data, error, isLoading, refetch: fetchData };
+}
+
+export default useFetch;
+```
+
+### Componente com Animações
+
+```tsx
+'use client';
+
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+
+interface ToastProps {
+  message: string;
+  type: 'success' | 'error' | 'info';
+}
+
+export function Toast({ message, type }: ToastProps) {
+  const [isVisible, setIsVisible] = useState(true);
+
+  const colors = {
+    success: 'bg-green-500',
+    error: 'bg-red-500',
+    info: 'bg-blue-500',
+  };
+
+  return (
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          initial={{ opacity: 0, y: 50, scale: 0.3 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
+          className={`${colors[type]} px-4 py-2 rounded-lg shadow-lg`}
+        >
+          <p className="text-white font-medium">{message}</p>
+          <button
+            onClick={() => setIsVisible(false)}
+            className="absolute top-1 right-2 text-white/80 hover:text-white"
+          >
+            ×
+          </button>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+```
+
+## CSS e Tailwind
+
+### Plugin Customizado do Tailwind
+
+```javascript
+// tailwind.config.js
+const plugin = require('tailwindcss/plugin');
+
+module.exports = {
+  plugins: [
+    plugin(function({ addUtilities, theme }) {
+      const newUtilities = {
+        '.text-gradient': {
+          'background': 'linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%)',
+          '-webkit-background-clip': 'text',
+          '-webkit-text-fill-color': 'transparent',
+        },
+        '.glass': {
+          'background': 'rgba(255, 255, 255, 0.1)',
+          'backdrop-filter': 'blur(10px)',
+          'border': '1px solid rgba(255, 255, 255, 0.2)',
+        },
+      };
+      addUtilities(newUtilities);
+    }),
+  ],
+};
+```
+
+### Layout CSS Grid
+
+```css
+/* Grid responsivo moderno com áreas nomeadas */
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: 250px 1fr 300px;
+  grid-template-rows: 60px 1fr 50px;
+  grid-template-areas:
+    "header header header"
+    "sidebar main aside"
+    "footer footer footer";
+  min-height: 100vh;
+  gap: 1rem;
+}
+
+.dashboard-layout > header { grid-area: header; }
+.dashboard-layout > aside:first-of-type { grid-area: sidebar; }
+.dashboard-layout > main { grid-area: main; }
+.dashboard-layout > aside:last-of-type { grid-area: aside; }
+.dashboard-layout > footer { grid-area: footer; }
+
+/* Responsivo: Empilhar no mobile */
+@media (max-width: 768px) {
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "header"
+      "main"
+      "sidebar"
+      "aside"
+      "footer";
+  }
+}
+```
+
+## Comandos de Terminal
+
+### Operações Comuns do Git
+
+```bash
+# Rebase interativo para os últimos 5 commits
+git rebase -i HEAD~5
+
+# Stash com uma mensagem e incluir arquivos não rastreados
+git stash push -u -m "Work in progress: feature X"
+
+# Cherry-pick de um intervalo de commits
+git cherry-pick start_commit^..end_commit
+
+# Encontrar qual commit introduziu um bug
+git bisect start
+git bisect bad HEAD
+git bisect good v1.0.0
+# Git vai guiá-lo pelo resto
+
+# Limpar branches já mergeados
+git branch --merged | grep -v "\*\|main\|master" | xargs -n 1 git branch -d
+```
+
+### Comandos Docker
+
+```bash
+# Build e executar com live reload para desenvolvimento
+docker compose -f docker-compose.dev.yml up --build
+
+# Executar um comando em um container em execução
+docker exec -it container_name /bin/sh
+
+# Limpar todos os recursos não utilizados
+docker system prune -a --volumes
+
+# Ver logs com timestamps e seguir
+docker logs -f --timestamps container_name
+
+# Copiar arquivos do container para o host
+docker cp container_name:/path/in/container ./local/path
+```
+
+## Configuração JSON
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}
+```
+
+## Queries SQL
+
+```sql
+-- Encontrar usuários com suas estatísticas de pedidos
+SELECT
+  u.id,
+  u.name,
+  u.email,
+  COUNT(o.id) as total_orders,
+  COALESCE(SUM(o.total), 0) as total_spent,
+  MAX(o.created_at) as last_order_date
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+WHERE u.created_at >= DATE_SUB(NOW(), INTERVAL 1 YEAR)
+GROUP BY u.id, u.name, u.email
+HAVING total_orders > 0
+ORDER BY total_spent DESC
+LIMIT 100;
+
+-- Criar um índice para melhor performance de query
+CREATE INDEX idx_orders_user_created
+ON orders (user_id, created_at DESC);
+```
+
+<Callout type="info">
+Todos os snippets de código estão prontos para copiar! Clique no botão de copiar que aparece quando você passa o mouse sobre qualquer bloco de código.
+</Callout>
+
+## Conclusão
+
+Estes exemplos demonstram a variedade de syntax highlighting disponível neste blog. O highlighter Shiki fornece highlighting preciso e consistente com o tema para todas as principais linguagens de programação.
+
+Sinta-se à vontade para usar estes snippets em seus próprios projetos!
