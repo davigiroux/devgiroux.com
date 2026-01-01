@@ -1,0 +1,80 @@
+{
+  "nav": {
+    "home": "Início",
+    "blog": "Blog"
+  },
+  "hero": {
+    "badge": "Bem-vindo ao DevGiroux",
+    "title1": "Explorando Código,",
+    "title2": "Um Post de Cada Vez",
+    "description": "Mergulhe no mundo do desenvolvimento web, programação e tecnologia. Junte-se a mim em uma jornada de aprendizado e descoberta contínua.",
+    "exploreArticles": "Explorar Artigos",
+    "latestPosts": "Posts Recentes",
+    "articles": "Artigos",
+    "topics": "Tópicos",
+    "readers": "Leitores"
+  },
+  "sections": {
+    "featuredArticles": "Artigos em Destaque",
+    "featuredDescription": "Posts selecionados que você não pode perder",
+    "latestArticles": "Artigos Recentes",
+    "latestDescription": "Novos insights e tutoriais",
+    "viewAll": "Ver todos",
+    "viewAllArticles": "Ver todos os artigos",
+    "exploreByTopic": "Explorar por Tópico",
+    "browseByCategory": "Navegar artigos por categoria"
+  },
+  "blog": {
+    "title": "Blog",
+    "description": "Artigos sobre desenvolvimento web, programação e tecnologia.",
+    "articlesCount": "{count} artigos publicados",
+    "noPostsYet": "Nenhum post ainda",
+    "checkBackSoon": "Volte em breve para novos conteúdos!"
+  },
+  "article": {
+    "minRead": "{minutes} min de leitura",
+    "publishedOn": "Publicado em {date}",
+    "shareArticle": "Compartilhar artigo",
+    "comments": "Comentários",
+    "backToBlog": "Voltar ao Blog",
+    "tableOfContents": "Índice",
+    "onThisPage": "Nesta página"
+  },
+  "tag": {
+    "title": "Tag: {tag}",
+    "articlesTagged": "{count} artigos marcados com"
+  },
+  "search": {
+    "placeholder": "Buscar posts...",
+    "startTyping": "Comece a digitar para buscar posts...",
+    "navigationHint": "Use as setas para navegar, Enter para selecionar, Esc para fechar",
+    "noResults": "Nenhum post encontrado para \"{query}\"",
+    "tryDifferent": "Tente palavras-chave diferentes ou verifique a ortografia",
+    "results": "{count} resultados"
+  },
+  "language": {
+    "switch": "Trocar idioma",
+    "en": "English",
+    "ptBR": "Português (BR)"
+  },
+  "languageBadge": {
+    "en": "EN",
+    "ptBR": "PT-BR",
+    "unavailable": "Tradução indisponível"
+  },
+  "errors": {
+    "notFound": "Página não encontrada",
+    "notFoundDescription": "A página que você procura não existe.",
+    "backHome": "Voltar ao início"
+  },
+  "footer": {
+    "copyright": "Todos os direitos reservados",
+    "builtWith": "Feito com"
+  },
+  "share": {
+    "twitter": "Compartilhar no Twitter",
+    "linkedin": "Compartilhar no LinkedIn",
+    "copyLink": "Copiar link",
+    "copied": "Copiado!"
+  }
+}

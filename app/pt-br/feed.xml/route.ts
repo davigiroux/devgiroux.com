@@ -3,21 +3,21 @@ import { getAllPosts, getPostBySlug } from '@/lib/posts';
 import { siteConfig } from '@/lib/config';
 
 export async function GET() {
-  // English feed - only posts that have English content (not fallbacks)
-  const posts = getAllPosts('en').filter((p) => !p.isFallback);
+  // Portuguese feed - only posts that have Portuguese content (not fallbacks)
+  const posts = getAllPosts('pt-BR').filter((p) => !p.isFallback);
 
   const feed = new Feed({
     title: siteConfig.name,
     description: siteConfig.description,
-    id: siteConfig.url,
-    link: siteConfig.url,
-    language: 'en',
+    id: `${siteConfig.url}/pt-br`,
+    link: `${siteConfig.url}/pt-br`,
+    language: 'pt-BR',
     image: `${siteConfig.url}/logo.png`,
     favicon: `${siteConfig.url}/favicon.ico`,
-    copyright: `All rights reserved ${new Date().getFullYear()}, ${siteConfig.author.name}`,
+    copyright: `Todos os direitos reservados ${new Date().getFullYear()}, ${siteConfig.author.name}`,
     updated: posts[0] ? new Date(posts[0].frontmatter.date) : new Date(),
     feedLinks: {
-      rss2: `${siteConfig.url}/feed.xml`,
+      rss2: `${siteConfig.url}/pt-br/feed.xml`,
     },
     author: {
       name: siteConfig.author.name,
@@ -26,10 +26,10 @@ export async function GET() {
   });
 
   for (const postMeta of posts) {
-    const post = getPostBySlug(postMeta.slug, 'en');
-    if (!post) continue;
+    const post = getPostBySlug(postMeta.slug, 'pt-BR');
+    if (!post || post.isFallback) continue;
 
-    const url = `${siteConfig.url}/blog/${post.slug}`;
+    const url = `${siteConfig.url}/pt-br/blog/${post.slug}`;
 
     feed.addItem({
       title: post.frontmatter.title,

@@ -1,0 +1,80 @@
+{
+  "nav": {
+    "home": "Home",
+    "blog": "Blog"
+  },
+  "hero": {
+    "badge": "Welcome to DevGiroux",
+    "title1": "Exploring Code,",
+    "title2": "One Post at a Time",
+    "description": "Dive into the world of web development, programming, and technology. Join me on a journey of continuous learning and discovery.",
+    "exploreArticles": "Explore Articles",
+    "latestPosts": "Latest Posts",
+    "articles": "Articles",
+    "topics": "Topics",
+    "readers": "Readers"
+  },
+  "sections": {
+    "featuredArticles": "Featured Articles",
+    "featuredDescription": "Handpicked posts you shouldn't miss",
+    "latestArticles": "Latest Articles",
+    "latestDescription": "Fresh insights and tutorials",
+    "viewAll": "View all",
+    "viewAllArticles": "View all articles",
+    "exploreByTopic": "Explore by Topic",
+    "browseByCategory": "Browse articles by category"
+  },
+  "blog": {
+    "title": "Blog",
+    "description": "Articles about web development, programming, and technology.",
+    "articlesCount": "{count} articles published",
+    "noPostsYet": "No posts yet",
+    "checkBackSoon": "Check back soon for new content!"
+  },
+  "article": {
+    "minRead": "{minutes} min read",
+    "publishedOn": "Published on {date}",
+    "shareArticle": "Share this article",
+    "comments": "Comments",
+    "backToBlog": "Back to Blog",
+    "tableOfContents": "Table of Contents",
+    "onThisPage": "On this page"
+  },
+  "tag": {
+    "title": "Tag: {tag}",
+    "articlesTagged": "{count} articles tagged with"
+  },
+  "search": {
+    "placeholder": "Search posts...",
+    "startTyping": "Start typing to search posts...",
+    "navigationHint": "Use arrows to navigate, Enter to select, Esc to close",
+    "noResults": "No posts found for \"{query}\"",
+    "tryDifferent": "Try different keywords or check your spelling",
+    "results": "{count} results"
+  },
+  "language": {
+    "switch": "Switch language",
+    "en": "English",
+    "ptBR": "Português (BR)"
+  },
+  "languageBadge": {
+    "en": "EN",
+    "ptBR": "PT-BR",
+    "unavailable": "Translation unavailable"
+  },
+  "errors": {
+    "notFound": "Page not found",
+    "notFoundDescription": "The page you're looking for doesn't exist.",
+    "backHome": "Back to home"
+  },
+  "footer": {
+    "copyright": "All rights reserved",
+    "builtWith": "Built with"
+  },
+  "share": {
+    "twitter": "Share on Twitter",
+    "linkedin": "Share on LinkedIn",
+    "copyLink": "Copy link",
+    "copied": "Copied!"
+  }
+}

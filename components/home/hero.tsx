@@ -1,8 +1,15 @@
+'use client';
+
 import Link from 'next/link';
+import { useLocale, useTranslations } from 'next-intl';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { getLocalizedPath, Locale } from '@/lib/i18n';
 
 export function Hero() {
+  const locale = useLocale() as Locale;
+  const t = useTranslations('hero');
+
   return (
     <section className="relative overflow-hidden border-b border-border bg-gradient-to-b from-background via-background to-surface">
       {/* Background decoration */}
@@ -14,22 +21,21 @@ export function Hero() {
           {/* Badge */}
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-medium text-primary backdrop-blur">
             <Sparkles className="h-4 w-4" />
-            <span>Welcome to DevGiroux</span>
+            <span>{t('badge')}</span>
           </div>
 
           {/* Heading */}
           <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground sm:text-6xl lg:text-7xl">
-            Exploring Code,
+            {t('title1')}
             <br />
             <span className="bg-gradient-to-r from-cyan-400 to-teal-500 bg-clip-text text-transparent">
-              One Post at a Time
+              {t('title2')}
             </span>
           </h1>
 
           {/* Description */}
           <p className="mb-10 text-lg leading-relaxed text-muted-foreground sm:text-xl">
-            Dive into the world of web development, programming, and technology.
-            Join me on a journey of continuous learning and discovery.
+            {t('description')}
           </p>
 
           {/* CTA Buttons */}
@@ -39,8 +45,8 @@ export function Hero() {
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20"
             >
-              <Link href="/blog">
-                Explore Articles
+              <Link href={getLocalizedPath('/blog', locale)}>
+                {t('exploreArticles')}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -52,7 +58,7 @@ export function Hero() {
               className="border-primary/20 hover:border-primary/50 hover:bg-primary/10"
             >
               <Link href="#latest">
-                Latest Posts
+                {t('latestPosts')}
               </Link>
             </Button>
           </div>
@@ -61,15 +67,15 @@ export function Hero() {
           <div className="mt-16 grid grid-cols-3 gap-8 border-t border-border pt-12">
             <div>
               <div className="text-3xl font-bold text-primary">50+</div>
-              <div className="mt-1 text-sm text-muted-foreground">Articles</div>
+              <div className="mt-1 text-sm text-muted-foreground">{t('articles')}</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-primary">10+</div>
-              <div className="mt-1 text-sm text-muted-foreground">Topics</div>
+              <div className="mt-1 text-sm text-muted-foreground">{t('topics')}</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-primary">1k+</div>
-              <div className="mt-1 text-sm text-muted-foreground">Readers</div>
+              <div className="mt-1 text-sm text-muted-foreground">{t('readers')}</div>
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { setRequestLocale } from 'next-intl/server';
 import { getPostBySlug, getAllSlugs } from '@/lib/posts';
 import { compileMDXContent } from '@/lib/mdx';
 import { ArticleHeader } from '@/components/blog/article-header';
@@ -7,19 +8,28 @@ import { TableOfContents } from '@/components/blog/table-of-contents';
 import { ShareButtons } from '@/components/blog/share-buttons';
 import { GiscusComments } from '@/components/blog/giscus-comments';
 import { siteConfig } from '@/lib/config';
+import { locales, Locale, getLocalizedPath } from '@/lib/i18n';
 
 interface BlogPostPageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export async function generateStaticParams() {
   const slugs = getAllSlugs();
-  return slugs.map((slug) => ({ slug }));
+  const params: { locale: string; slug: string }[] = [];
+
+  for (const slug of slugs) {
+    for (const locale of locales) {
+      params.push({ locale, slug });
+    }
+  }
+
+  return params;
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const { locale, slug } = await params;
+  const post = getPostBySlug(slug, locale as Locale);
 
   if (!post) {
     return {
@@ -28,7 +38,8 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   }
 
   const { frontmatter } = post;
-  const url = `${siteConfig.url}/blog/${slug}`;
+  const localizedPath = getLocalizedPath(`/blog/${slug}`, locale as Locale);
+  const url = `${siteConfig.url}${localizedPath}`;
   const ogImage = frontmatter.coverImage || `${siteConfig.url}/og/blog/${slug}`;
 
   return {
@@ -40,6 +51,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       description: frontmatter.description,
       type: 'article',
       publishedTime: frontmatter.date,
+      locale: locale === 'pt-BR' ? 'pt_BR' : 'en_US',
       url,
       images: [
         {
@@ -58,12 +70,23 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       images: [ogImage],
       creator: siteConfig.author.twitter,
     },
+    alternates: {
+      canonical: url,
+      languages: {
+        'en': `${siteConfig.url}/blog/${slug}`,
+        'pt-BR': `${siteConfig.url}/pt-br/blog/${slug}`,
+        'x-default': `${siteConfig.url}/blog/${slug}`,
+      },
+    },
   };
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const { locale, slug } = await params;
+  setRequestLocale(locale);
+
+  const typedLocale = locale as Locale;
+  const post = getPostBySlug(slug, typedLocale);
 
   if (!post) {
     notFound();
@@ -73,7 +96,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     source: post.content,
   });
 
-  const url = `${siteConfig.url}/blog/${slug}`;
+  const localizedPath = getLocalizedPath(`/blog/${slug}`, typedLocale);
+  const url = `${siteConfig.url}${localizedPath}`;
 
   return (
     <div className="min-h-screen bg-background">
@@ -88,6 +112,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 readingTime={post.readingTime}
                 tags={post.frontmatter.tags}
                 image={post.frontmatter.coverImage}
+                isFallback={post.isFallback}
+                availableLocales={post.availableLocales}
               />
 
               <article className="article-content max-w-none">
@@ -108,6 +134,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   repoId={siteConfig.giscus.repoId}
                   category={siteConfig.giscus.category}
                   categoryId={siteConfig.giscus.categoryId}
+                  slug={slug}
                 />
               )}
             </div>
@@ -131,6 +158,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             description: post.frontmatter.description,
             image: post.frontmatter.coverImage || `${siteConfig.url}/og-image.png`,
             datePublished: post.frontmatter.date,
+            inLanguage: locale,
             author: {
               '@type': 'Person',
               name: siteConfig.author.name,
