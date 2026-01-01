@@ -2,17 +2,17 @@
 
 import { useEffect, useRef } from 'react';
 import { useTheme } from 'next-themes';
+import { useLocale, useTranslations } from 'next-intl';
 
 interface GiscusCommentsProps {
   repo?: string;
   repoId?: string;
   category?: string;
   categoryId?: string;
-  mapping?: string;
+  slug?: string; // Use slug for consistent mapping across languages
   reactionsEnabled?: boolean;
   emitMetadata?: boolean;
   inputPosition?: 'top' | 'bottom';
-  lang?: string;
   loading?: 'lazy' | 'eager';
 }
 
@@ -21,15 +21,19 @@ export function GiscusComments({
   repoId = '',
   category = 'Announcements',
   categoryId = '',
-  mapping = 'pathname',
+  slug,
   reactionsEnabled = true,
   emitMetadata = false,
   inputPosition = 'bottom',
-  lang = 'en',
   loading = 'lazy',
 }: GiscusCommentsProps) {
   const ref = useRef<HTMLDivElement>(null);
   const { resolvedTheme } = useTheme();
+  const locale = useLocale();
+  const t = useTranslations('article');
+
+  // Map locale to Giscus supported languages
+  const giscusLang = locale === 'pt-BR' ? 'pt' : 'en';
 
   useEffect(() => {
     if (!ref.current || ref.current.hasChildNodes()) return;
@@ -62,13 +66,17 @@ export function GiscusComments({
     script.setAttribute('data-repo-id', repoId);
     script.setAttribute('data-category', category);
     script.setAttribute('data-category-id', categoryId);
-    script.setAttribute('data-mapping', mapping);
+    // Use 'specific' mapping with the English slug for shared discussions
+    script.setAttribute('data-mapping', slug ? 'specific' : 'pathname');
+    if (slug) {
+      script.setAttribute('data-term', slug);
+    }
     script.setAttribute('data-strict', '0');
     script.setAttribute('data-reactions-enabled', reactionsEnabled ? '1' : '0');
     script.setAttribute('data-emit-metadata', emitMetadata ? '1' : '0');
     script.setAttribute('data-input-position', inputPosition);
     script.setAttribute('data-theme', resolvedTheme === 'dark' ? 'dark' : 'light');
-    script.setAttribute('data-lang', lang);
+    script.setAttribute('data-lang', giscusLang);
     script.setAttribute('data-loading', loading);
     script.crossOrigin = 'anonymous';
     script.async = true;
@@ -79,12 +87,12 @@ export function GiscusComments({
     repoId,
     category,
     categoryId,
-    mapping,
+    slug,
     reactionsEnabled,
     emitMetadata,
     inputPosition,
     resolvedTheme,
-    lang,
+    giscusLang,
     loading,
   ]);
 
@@ -109,7 +117,7 @@ export function GiscusComments({
 
   return (
     <div className="mt-12">
-      <h2 className="mb-6 text-2xl font-bold text-foreground">Comments</h2>
+      <h2 className="mb-6 text-2xl font-bold text-foreground">{t('comments')}</h2>
       <div ref={ref} className="giscus" />
     </div>
   );

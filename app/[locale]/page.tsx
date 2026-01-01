@@ -1,14 +1,26 @@
 import Link from 'next/link';
+import { getLocale, getTranslations, setRequestLocale } from 'next-intl/server';
 import { Hero } from '@/components/home/hero';
 import { ArticleCard } from '@/components/blog/article-card';
 import { TagBadge } from '@/components/blog/tag-badge';
 import { getFeaturedPosts, getLatestPosts, getAllTags } from '@/lib/posts';
+import { getLocalizedPath, Locale } from '@/lib/i18n';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-export default function HomePage() {
-  const featuredPosts = getFeaturedPosts();
-  const latestPosts = getLatestPosts(6);
+interface HomePageProps {
+  params: Promise<{ locale: string }>;
+}
+
+export default async function HomePage({ params }: HomePageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
+  const t = await getTranslations('sections');
+  const typedLocale = locale as Locale;
+
+  const featuredPosts = getFeaturedPosts(typedLocale);
+  const latestPosts = getLatestPosts(6, typedLocale);
   const tags = getAllTags();
 
   return (
@@ -21,10 +33,10 @@ export default function HomePage() {
           <div className="container mx-auto px-4">
             <div className="mb-12">
               <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
-                Featured Articles
+                {t('featuredArticles')}
               </h2>
               <p className="mt-2 text-muted-foreground">
-                Handpicked posts you shouldn't miss
+                {t('featuredDescription')}
               </p>
             </div>
 
@@ -39,6 +51,8 @@ export default function HomePage() {
                   readingTime={post.readingTime}
                   tags={post.frontmatter.tags}
                   image={post.frontmatter.coverImage}
+                  availableLocales={post.availableLocales}
+                  isFallback={post.isFallback}
                 />
               ))}
             </div>
@@ -52,10 +66,10 @@ export default function HomePage() {
           <div className="mb-12 flex items-end justify-between">
             <div>
               <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
-                Latest Articles
+                {t('latestArticles')}
               </h2>
               <p className="mt-2 text-muted-foreground">
-                Fresh insights and tutorials
+                {t('latestDescription')}
               </p>
             </div>
             <Button
@@ -63,8 +77,8 @@ export default function HomePage() {
               variant="ghost"
               className="hidden text-primary hover:text-primary/80 sm:flex"
             >
-              <Link href="/blog">
-                View all
+              <Link href={getLocalizedPath('/blog', typedLocale)}>
+                {t('viewAll')}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -81,14 +95,16 @@ export default function HomePage() {
                 readingTime={post.readingTime}
                 tags={post.frontmatter.tags}
                 image={post.frontmatter.coverImage}
+                availableLocales={post.availableLocales}
+                isFallback={post.isFallback}
               />
             ))}
           </div>
 
           <div className="mt-12 text-center sm:hidden">
             <Button asChild variant="outline" className="w-full">
-              <Link href="/blog">
-                View all articles
+              <Link href={getLocalizedPath('/blog', typedLocale)}>
+                {t('viewAllArticles')}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -102,10 +118,10 @@ export default function HomePage() {
           <div className="container mx-auto px-4">
             <div className="mb-12">
               <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
-                Explore by Topic
+                {t('exploreByTopic')}
               </h2>
               <p className="mt-2 text-muted-foreground">
-                Browse articles by category
+                {t('browseByCategory')}
               </p>
             </div>
 
@@ -115,7 +131,7 @@ export default function HomePage() {
                   key={tag}
                   tag={tag}
                   count={count}
-                  href={`/tag/${encodeURIComponent(tag)}`}
+                  href={getLocalizedPath(`/tag/${encodeURIComponent(tag)}`, typedLocale)}
                 />
               ))}
             </div>

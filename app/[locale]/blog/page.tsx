@@ -1,15 +1,31 @@
 import { Metadata } from 'next';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { getAllPosts } from '@/lib/posts';
 import { ArticleCard } from '@/components/blog/article-card';
+import { Locale } from '@/lib/i18n';
 import { FileText } from 'lucide-react';
 
-export const metadata: Metadata = {
-  title: 'Blog',
-  description: 'Read articles about web development, programming, and technology.',
-};
+interface BlogPageProps {
+  params: Promise<{ locale: string }>;
+}
 
-export default function BlogPage() {
-  const posts = getAllPosts();
+export async function generateMetadata({ params }: BlogPageProps): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'blog' });
+
+  return {
+    title: t('title'),
+    description: t('description'),
+  };
+}
+
+export default async function BlogPage({ params }: BlogPageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
+  const t = await getTranslations('blog');
+  const typedLocale = locale as Locale;
+  const posts = getAllPosts(typedLocale);
 
   return (
     <div className="min-h-screen bg-background">
@@ -17,13 +33,13 @@ export default function BlogPage() {
         {/* Header */}
         <div className="mb-12">
           <h1 className="text-4xl font-bold text-foreground sm:text-5xl">
-            Blog
+            {t('title')}
           </h1>
           <p className="mt-4 text-lg text-muted-foreground">
-            Articles about web development, programming, and technology.
+            {t('description')}
           </p>
           <p className="mt-2 text-sm text-muted-foreground">
-            {posts.length} {posts.length === 1 ? 'article' : 'articles'} published
+            {t('articlesCount', { count: posts.length })}
           </p>
         </div>
 
@@ -40,6 +56,8 @@ export default function BlogPage() {
                 readingTime={post.readingTime}
                 tags={post.frontmatter.tags}
                 image={post.frontmatter.coverImage}
+                availableLocales={post.availableLocales}
+                isFallback={post.isFallback}
               />
             ))}
           </div>
@@ -47,10 +65,10 @@ export default function BlogPage() {
           <div className="flex flex-col items-center justify-center py-24 text-center">
             <FileText className="h-16 w-16 text-muted-foreground mb-4" />
             <h2 className="text-2xl font-semibold text-foreground mb-2">
-              No posts yet
+              {t('noPostsYet')}
             </h2>
             <p className="text-muted-foreground">
-              Check back soon for new content!
+              {t('checkBackSoon')}
             </p>
           </div>
         )}
