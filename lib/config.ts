@@ -1,7 +1,8 @@
 export const siteConfig = {
   name: "DevGiroux",
   url: "https://devgiroux.com",
-  description: "Personal blog about web development, programming, and technology.",
+  description:
+    "Personal blog about web development, programming, and technology.",
   author: {
     name: "DevGiroux",
     twitter: "@devgiroux",
@@ -13,15 +14,15 @@ export const siteConfig = {
     twitter: "https://twitter.com/devgiroux",
     instagram: "https://instagram.com/devgiroux",
     youtube: "https://youtube.com/@devgiroux",
-    github: "https://github.com/devgiroux",
+    github: "https://github.com/davigiroux",
   },
   // Giscus configuration - update after setting up your GitHub repo
   giscus: {
     repo: "devgiroux/blog-comments" as `${string}/${string}`,
-    repoId: "", // Get this from https://giscus.app
+    repoId: "R_kgDOQxbZL", // Get this from https://giscus.app
     category: "Announcements",
-    categoryId: "", // Get this from https://giscus.app
+    categoryId: "DIC_kwDOQxbZLc4C0fO3", // Get this from https://giscus.app
   },
-}
+};
 
-export type SiteConfig = typeof siteConfig
+export type SiteConfig = typeof siteConfig;
