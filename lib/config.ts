@@ -18,7 +18,7 @@ export const siteConfig = {
   },
   // Giscus configuration - update after setting up your GitHub repo
   giscus: {
-    repo: "devgiroux/blog-comments" as `${string}/${string}`,
+    repo: "davigiroux/devgiroux.com" as `${string}/${string}`,
     repoId: "R_kgDOQxbZL", // Get this from https://giscus.app
     category: "Announcements",
     categoryId: "DIC_kwDOQxbZLc4C0fO3", // Get this from https://giscus.app
