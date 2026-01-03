@@ -12,6 +12,78 @@ const cache = {
   availableLocales: new Map<string, Locale[]>(),
   posts: new Map<string, Post | null>(),
   readingTimes: new Map<string, string>(),
+  fileDiscovery: null as PostFileInfo[] | null,
+}
+
+interface PostFileInfo {
+  slug: string
+  locale: Locale | null
+  datePath: string // e.g., "2025/12"
+  fullPath: string
+  fileName: string
+}
+
+/**
+ * Recursively walk the posts directory to find all .mdx files
+ * Returns array of objects with { slug, locale, datePath, fullPath }
+ */
+function walkPostsDirectory(): PostFileInfo[] {
+  if (cache.fileDiscovery) return cache.fileDiscovery
+
+  const files: PostFileInfo[] = []
+
+  function walk(dir: string, relativePath: string = ""): void {
+    if (!fs.existsSync(dir)) return
+
+    const entries = fs.readdirSync(dir, { withFileTypes: true })
+
+    for (const entry of entries) {
+      const fullPath = path.join(dir, entry.name)
+      const currentRelativePath = relativePath
+        ? path.join(relativePath, entry.name)
+        : entry.name
+
+      if (entry.isDirectory()) {
+        if (!entry.name.startsWith(".")) {
+          walk(fullPath, currentRelativePath)
+        }
+      } else if (entry.isFile() && entry.name.endsWith(".mdx")) {
+        const match = entry.name.match(/^(.+?)(?:\.(en|pt-BR))?\.mdx$/)
+        if (match) {
+          const slug = match[1]
+          const locale = (match[2] as Locale) || null
+          const pathParts = relativePath.split(path.sep)
+          const datePath = pathParts.slice(0, 2).join("/")
+
+          files.push({ slug, locale, datePath, fullPath, fileName: entry.name })
+        }
+      }
+    }
+  }
+
+  walk(postsDirectory)
+  cache.fileDiscovery = files
+  return files
+}
+
+/**
+ * Find the post file for a given slug and locale
+ * Searches through all date directories
+ */
+function findPostFile(slug: string, locale: Locale): PostFileInfo | null {
+  const files = walkPostsDirectory()
+
+  // Try exact match: slug + locale
+  const exactMatch = files.find((f) => f.slug === slug && f.locale === locale)
+  if (exactMatch) return exactMatch
+
+  // Fallback to old format (no locale = English)
+  if (locale === "en") {
+    const oldFormat = files.find((f) => f.slug === slug && f.locale === null)
+    if (oldFormat) return oldFormat
+  }
+
+  return null
 }
 
 export interface PostFrontmatter {
@@ -44,27 +116,21 @@ export interface PostMeta {
 
 /**
  * Get all unique base slugs (without locale suffix)
- * Handles both old format (slug.mdx) and new format (slug.locale.mdx)
+ * Scans YYYY/MM/DD/ directory structure
  */
 function getAllBaseSlugs(): string[] {
-  if (cache.baseSlugs) {
-    return cache.baseSlugs
-  }
+  if (cache.baseSlugs) return cache.baseSlugs
 
   if (!fs.existsSync(postsDirectory)) {
     cache.baseSlugs = []
     return []
   }
 
-  const files = fs.readdirSync(postsDirectory).filter((file) => file.endsWith(".mdx"))
+  const files = walkPostsDirectory()
   const slugs = new Set<string>()
 
   for (const file of files) {
-    // Match: slug.mdx, slug.en.mdx, or slug.pt-BR.mdx
-    const match = file.match(/^(.+?)(?:\.(en|pt-BR))?\.mdx$/)
-    if (match) {
-      slugs.add(match[1])
-    }
+    slugs.add(file.slug)
   }
 
   cache.baseSlugs = Array.from(slugs)
@@ -79,21 +145,18 @@ export function getAvailableLocales(slug: string): Locale[] {
     return cache.availableLocales.get(slug)!
   }
 
+  const files = walkPostsDirectory()
   const available: Locale[] = []
 
   for (const locale of locales) {
-    const filePath = path.join(postsDirectory, `${slug}.${locale}.mdx`)
-    if (fs.existsSync(filePath)) {
-      available.push(locale)
-    }
+    const found = files.find((f) => f.slug === slug && f.locale === locale)
+    if (found) available.push(locale)
   }
 
-  // Check for old format (without locale suffix) - treat as English
+  // Check old format (no locale = English)
   if (available.length === 0) {
-    const oldFormatPath = path.join(postsDirectory, `${slug}.mdx`)
-    if (fs.existsSync(oldFormatPath)) {
-      available.push("en")
-    }
+    const oldFormat = files.find((f) => f.slug === slug && f.locale === null)
+    if (oldFormat) available.push("en")
   }
 
   cache.availableLocales.set(slug, available)
@@ -108,24 +171,16 @@ function getPostFilePath(
   slug: string,
   locale: Locale
 ): { path: string; isFallback: boolean } | null {
-  // Try requested locale first (new format)
-  const localizedPath = path.join(postsDirectory, `${slug}.${locale}.mdx`)
-  if (fs.existsSync(localizedPath)) {
-    return { path: localizedPath, isFallback: false }
+  const requestedFile = findPostFile(slug, locale)
+  if (requestedFile) {
+    return { path: requestedFile.fullPath, isFallback: false }
   }
 
-  // Fallback to English if requesting non-default locale
   if (locale !== defaultLocale) {
-    const fallbackPath = path.join(postsDirectory, `${slug}.${defaultLocale}.mdx`)
-    if (fs.existsSync(fallbackPath)) {
-      return { path: fallbackPath, isFallback: true }
+    const fallbackFile = findPostFile(slug, defaultLocale)
+    if (fallbackFile) {
+      return { path: fallbackFile.fullPath, isFallback: true }
     }
-  }
-
-  // Try old format (without locale suffix) as final fallback
-  const oldFormatPath = path.join(postsDirectory, `${slug}.mdx`)
-  if (fs.existsSync(oldFormatPath)) {
-    return { path: oldFormatPath, isFallback: locale !== defaultLocale }
   }
 
   return null
@@ -139,16 +194,13 @@ function getEnglishReadingTime(slug: string): string {
     return cache.readingTimes.get(slug)!
   }
 
-  const enPath = path.join(postsDirectory, `${slug}.en.mdx`)
-  const oldPath = path.join(postsDirectory, `${slug}.mdx`)
-
-  const filePath = fs.existsSync(enPath) ? enPath : oldPath
-  if (!fs.existsSync(filePath)) {
+  const enFile = findPostFile(slug, "en")
+  if (!enFile) {
     cache.readingTimes.set(slug, "1 min read")
     return "1 min read"
   }
 
-  const content = fs.readFileSync(filePath, "utf-8")
+  const content = fs.readFileSync(enFile.fullPath, "utf-8")
   const { content: mdxContent } = matter(content)
   const time = readingTime(mdxContent).text
 

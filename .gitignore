@@ -24,6 +24,15 @@
 .DS_Store
 *.pem
 
+# claude code commands (personal workflow)
+.claude/commands/
+.claude/skills/
+.claude/settings.local.json
+.claude/plans/
+
+# obsidian
+.obsidian/
+
 # debug
 npm-debug.log*
 yarn-debug.log*
