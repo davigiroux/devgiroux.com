@@ -80,33 +80,33 @@
   },
   "about": {
     "pageTitle": "About",
-    "pageDescription": "Learn about Davi Giroux's journey from big company engineer to independent builder and entrepreneur.",
+    "pageDescription": "Learn about Davi Giroux, building AI-powered solutions for a leading crypto exchange while pursuing entrepreneurship and sharing the journey.",
     "hero": {
       "greeting": "Hi, I'm Davi Giroux",
       "tagline": "Engineer, Builder, Entrepreneur",
       "currentStatus": "Currently building",
-      "description": "After years working at leading tech companies, I'm now on a mission to build products, achieve financial independence, and share everything I learn along the way."
+      "description": "After years building software for companies like PagSeguro and Riot Games, I'm now working on AI-powered marketing infrastructure for one of the world's leading crypto exchanges (top 3 globally). When I'm not coding, you'll find me with my family (my wife, our 1-year-old son, and Frodo, our dog) or out running. I'm passionate about the best of both worlds: working at a top company while building my own products on the side."
     },
     "journey": {
       "title": "My Journey",
-      "description": "From corporate engineering to independent building",
+      "description": "From corporate engineering to building products",
       "timeline": {
-        "education": "Education & Early Career",
-        "bigCompany": "Working at Scale",
-        "transition": "The Transition",
-        "current": "Building Independently"
+        "education": "Foundation (2019-2021)",
+        "bigCompany": "Building at Scale (2021-2024)",
+        "transition": "The Transition (2024)",
+        "current": "Current Focus"
       },
       "content": {
-        "education": "Started my career learning software engineering fundamentals and building a strong technical foundation.",
-        "bigCompany": "Spent years at leading tech companies, working on large-scale systems and learning from talented teams.",
-        "transition": "Made the decision to leave corporate stability and pursue building products independently.",
-        "current": "Now focused on building products from scratch, documenting the journey, and sharing what I learn."
+        "education": "Built systems for government programs and public health at companies like Digix and Netsolar. Worked at PagSeguro PagBank on marketplace and delivery management, gaining full-stack experience with React, TypeScript, and C#. Completed a UX Design postgraduate degree during this time.",
+        "bigCompany": "At X-Team, I worked for two major clients: first building a retirement plan management system for companies, then developing internal tools for Riot Games (game deployment and developer platforms). Worked with Golang, React, TypeScript, Azure, and AWS, always focused on creating user-friendly platforms for non-technical users.",
+        "transition": "Joined a leading crypto exchange (top 3 globally) as Senior Software Engineer. Shifted focus to AI-powered solutions and marketing infrastructure while starting to pursue entrepreneurship alongside full-time work.",
+        "current": "Building AI-powered marketing platforms for one of the world's leading crypto exchanges, working with Golang, React, MongoDB, Snowflake, and AI tools like Claude, GPT-4, and Gemini. Pursuing entrepreneurship by building my own products while working full-time, and sharing everything I learn through this blog."
       }
     },
     "mission": {
       "title": "Mission & Vision",
       "subtitle": "Why I'm doing this",
-      "content": "After experiencing the corporate tech world, I realized my passion lies in building products from scratch and having direct impact. This blog documents my journey as I transition from employee to entrepreneur, sharing insights on development, finance, and personal growth.",
+      "content": "After working at companies like PagSeguro, Riot Games (via X-Team), and now one of the world's leading crypto exchanges, I've learned a lot about building software at scale. But I'm passionate about more than just working for others—I want to build my own products too. This blog is where I share that journey: building AI-powered marketing solutions for a top 3 crypto exchange, pursuing entrepreneurship on the side, and everything I'm learning about development, finance, and balancing it all while being a husband, father, and runner.",
       "values": {
         "independence": {
           "label": "Independence",
@@ -134,15 +134,21 @@
           "Web Development",
           "React & Next.js",
           "TypeScript",
+          "Golang",
           "Node.js",
+          "MongoDB & Snowflake",
           "System Design",
-          "Performance Optimization"
+          "Performance Optimization",
+          "AI Integration (Claude, GPT-4, Gemini)",
+          "Apache Airflow & Superset"
         ],
         "business": [
           "Product Development",
           "Entrepreneurship",
           "Building in Public",
-          "User Research"
+          "User Research",
+          "AI-Powered Solutions",
+          "Performance Marketing"
         ],
         "other": [
           "Personal Finance",

@@ -68,8 +68,8 @@ export function Journey() {
 
                     {/* Content */}
                     <div
-                      className={`flex-1 rounded-lg border border-border bg-background p-6 shadow-sm transition-all hover:shadow-md ${
-                        isEven ? 'sm:text-right' : 'sm:text-left'
+                      className={`flex-1 rounded-lg border border-border bg-background p-6 shadow-sm transition-all hover:shadow-md sm:max-w-[calc(50%-3rem)] ${
+                        isEven ? 'sm:text-right sm:mr-12' : 'sm:text-left sm:ml-12'
                       }`}
                     >
                       <h3 className="text-xl font-semibold text-foreground">

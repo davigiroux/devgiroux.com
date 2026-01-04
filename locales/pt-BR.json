@@ -80,33 +80,33 @@
   },
   "about": {
     "pageTitle": "Sobre",
-    "pageDescription": "Conheça a jornada de Davi Giroux de engenheiro em grandes empresas a construtor independente e empreendedor.",
+    "pageDescription": "Conheça Davi Giroux, construindo soluções com IA pra uma das maiores exchanges de criptomoedas enquanto busca empreendedorismo e compartilha a jornada.",
     "hero": {
       "greeting": "Olá, sou Davi Giroux",
-      "tagline": "Engenheiro, Construtor, Empreendedor",
+      "tagline": "Engenheiro, Criador, Empreendedor",
       "currentStatus": "Atualmente construindo",
-      "description": "Após anos trabalhando em empresas de tecnologia líderes, agora estou em uma missão para construir produtos, alcançar independência financeira e compartilhar tudo que aprendo no caminho."
+      "description": "Depois de anos construindo software pra empresas como PagSeguro e Riot Games, agora trabalho em infraestrutura de marketing com IA pra uma das maiores exchanges de criptomoedas do mundo (top 3 globalmente). Quando não estou codando, você me encontra com minha família (minha esposa, nosso filho de 1 ano e nosso cachorro, Frodo) ou correndo. Sou apaixonado pelo melhor dos dois mundos: trabalhar numa empresa de ponta enquanto construo meus próprios produtos."
     },
     "journey": {
       "title": "Minha Jornada",
-      "description": "De engenharia corporativa a construção independente",
+      "description": "De engenharia corporativa a criação de produtos",
       "timeline": {
-        "education": "Educação & Início de Carreira",
-        "bigCompany": "Trabalhando em Escala",
-        "transition": "A Transição",
-        "current": "Construindo Independentemente"
+        "education": "Base (2019-2021)",
+        "bigCompany": "Construindo em Escala (2021-2024)",
+        "transition": "A Transição (2024)",
+        "current": "Foco Atual"
       },
       "content": {
-        "education": "Comecei minha carreira aprendendo fundamentos de engenharia de software e construindo uma base técnica sólida.",
-        "bigCompany": "Passei anos em empresas de tecnologia líderes, trabalhando em sistemas de grande escala e aprendendo com equipes talentosas.",
-        "transition": "Tomei a decisão de deixar a estabilidade corporativa e buscar construir produtos de forma independente.",
-        "current": "Agora focado em construir produtos do zero, documentando a jornada e compartilhando o que aprendo."
+        "education": "Construí sistemas pra programas governamentais e saúde pública em empresas como Digix e Netsolar. Trabalhei no PagSeguro PagBank em marketplace e gestão de entregas, ganhando experiência full-stack com React, TypeScript e C#. Completei pós-graduação em UX Design nesse período.",
+        "bigCompany": "Na X-Team, trabalhei pra dois grandes clientes: primeiro construindo um sistema de gestão de planos de aposentadoria pra empresas, depois desenvolvendo ferramentas internas pra Riot Games (deployment de jogos e plataformas pra desenvolvedores). Trabalhei com Golang, React, TypeScript, Azure e AWS, sempre focado em criar plataformas amigáveis pra usuários não-técnicos.",
+        "transition": "Entrei numa das maiores exchanges de criptomoedas do mundo (top 3 globalmente) como Engenheiro de Software Sênior. Mudei o foco pra soluções com IA e infraestrutura de marketing, começando a buscar empreendedorismo junto com o trabalho full-time.",
+        "current": "Construindo plataformas de marketing com IA pra uma das maiores exchanges de criptomoedas do mundo, trabalhando com Golang, React, MongoDB, Snowflake e ferramentas de IA como Claude, GPT-4 e Gemini. Buscando empreendedorismo construindo meus próprios produtos enquanto trabalho full-time, e compartilhando tudo que aprendo por esse blog."
       }
     },
     "mission": {
       "title": "Missão & Visão",
       "subtitle": "Por que estou fazendo isso",
-      "content": "Após vivenciar o mundo corporativo tech, percebi que minha paixão está em construir produtos do zero e ter impacto direto. Este blog documenta minha jornada enquanto faço a transição de empregado para empreendedor, compartilhando insights sobre desenvolvimento, finanças e crescimento pessoal.",
+      "content": "Depois de trabalhar em empresas como PagSeguro, Riot Games (via X-Team) e agora uma das maiores exchanges de criptomoedas do mundo, aprendi muito sobre construir software em escala. Mas sou apaixonado por mais do que só trabalhar pros outros—quero construir meus próprios produtos também. Este blog é onde compartilho essa jornada: construindo soluções de marketing com IA pra uma exchange top 3, buscando empreendedorismo paralelamente, e tudo que aprendo sobre desenvolvimento, finanças e como equilibrar tudo isso sendo marido, pai e corredor.",
       "values": {
         "independence": {
           "label": "Independência",
@@ -134,15 +134,21 @@
           "Desenvolvimento Web",
           "React & Next.js",
           "TypeScript",
+          "Golang",
           "Node.js",
+          "MongoDB & Snowflake",
           "Design de Sistemas",
-          "Otimização de Performance"
+          "Otimização de Performance",
+          "Integração com IA (Claude, GPT-4, Gemini)",
+          "Apache Airflow & Superset"
         ],
         "business": [
           "Desenvolvimento de Produtos",
           "Empreendedorismo",
           "Construindo em Público",
-          "Pesquisa de Usuário"
+          "Pesquisa de Usuário",
+          "Soluções com IA",
+          "Marketing de Performance"
         ],
         "other": [
           "Finanças Pessoais",
