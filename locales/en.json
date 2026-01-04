@@ -1,13 +1,14 @@
 {
   "nav": {
     "home": "Home",
+    "about": "About",
     "blog": "Blog"
   },
   "hero": {
-    "badge": "Welcome to DevGiroux",
-    "title1": "Exploring Code,",
-    "title2": "One Post at a Time",
-    "description": "Dive into the world of web development, programming, and technology. Join me on a journey of continuous learning and discovery.",
+    "badge": "Welcome to DevGiroux.",
+    "title1": "Building, Learning,",
+    "title2": "Sharing the Journey",
+    "description": "From big company engineer to independent builder. Join me as I explore web development, entrepreneurship, finance, and personal growth while building products and documenting the journey.",
     "exploreArticles": "Explore Articles",
     "latestPosts": "Latest Posts",
     "articles": "Articles",
@@ -26,7 +27,7 @@
   },
   "blog": {
     "title": "Blog",
-    "description": "Articles about web development, programming, and technology.",
+    "description": "Articles about web development, building products, entrepreneurship, finance, and personal growth.",
     "articlesCount": "{count} articles published",
     "noPostsYet": "No posts yet",
     "checkBackSoon": "Check back soon for new content!"
@@ -76,5 +77,80 @@
     "linkedin": "Share on LinkedIn",
     "copyLink": "Copy link",
     "copied": "Copied!"
+  },
+  "about": {
+    "pageTitle": "About",
+    "pageDescription": "Learn about Davi Giroux's journey from big company engineer to independent builder and entrepreneur.",
+    "hero": {
+      "greeting": "Hi, I'm Davi Giroux",
+      "tagline": "Engineer, Builder, Entrepreneur",
+      "currentStatus": "Currently building",
+      "description": "After years working at leading tech companies, I'm now on a mission to build products, achieve financial independence, and share everything I learn along the way."
+    },
+    "journey": {
+      "title": "My Journey",
+      "description": "From corporate engineering to independent building",
+      "timeline": {
+        "education": "Education & Early Career",
+        "bigCompany": "Working at Scale",
+        "transition": "The Transition",
+        "current": "Building Independently"
+      },
+      "content": {
+        "education": "Started my career learning software engineering fundamentals and building a strong technical foundation.",
+        "bigCompany": "Spent years at leading tech companies, working on large-scale systems and learning from talented teams.",
+        "transition": "Made the decision to leave corporate stability and pursue building products independently.",
+        "current": "Now focused on building products from scratch, documenting the journey, and sharing what I learn."
+      }
+    },
+    "mission": {
+      "title": "Mission & Vision",
+      "subtitle": "Why I'm doing this",
+      "content": "After experiencing the corporate tech world, I realized my passion lies in building products from scratch and having direct impact. This blog documents my journey as I transition from employee to entrepreneur, sharing insights on development, finance, and personal growth.",
+      "values": {
+        "independence": {
+          "label": "Independence",
+          "description": "Building financial freedom through creating valuable products"
+        },
+        "learning": {
+          "label": "Learning",
+          "description": "Continuous growth and sharing knowledge with others"
+        },
+        "growth": {
+          "label": "Growth",
+          "description": "Developing both technical and business skills"
+        }
+      }
+    },
+    "skills": {
+      "title": "Skills & Expertise",
+      "categories": {
+        "technical": "Technical",
+        "business": "Business & Product",
+        "other": "Other"
+      },
+      "items": {
+        "technical": [
+          "Web Development",
+          "React & Next.js",
+          "TypeScript",
+          "Node.js",
+          "System Design",
+          "Performance Optimization"
+        ],
+        "business": [
+          "Product Development",
+          "Entrepreneurship",
+          "Building in Public",
+          "User Research"
+        ],
+        "other": [
+          "Personal Finance",
+          "Investment Strategy",
+          "Content Creation",
+          "Technical Writing"
+        ]
+      }
+    }
   }
 }

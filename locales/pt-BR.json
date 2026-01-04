@@ -1,13 +1,14 @@
 {
   "nav": {
     "home": "Início",
+    "about": "Sobre",
     "blog": "Blog"
   },
   "hero": {
-    "badge": "Bem-vindo ao DevGiroux",
-    "title1": "Explorando Código,",
-    "title2": "Um Post de Cada Vez",
-    "description": "Mergulhe no mundo do desenvolvimento web, programação e tecnologia. Junte-se a mim em uma jornada de aprendizado e descoberta contínua.",
+    "badge": "Bem-vindo ao DevGiroux.",
+    "title1": "Construindo, Aprendendo,",
+    "title2": "Compartilhando a Jornada",
+    "description": "De engenheiro em grandes empresas a construtor independente. Junte-se a mim enquanto exploro desenvolvimento web, empreendedorismo, finanças e crescimento pessoal construindo produtos e documentando a jornada.",
     "exploreArticles": "Explorar Artigos",
     "latestPosts": "Posts Recentes",
     "articles": "Artigos",
@@ -26,7 +27,7 @@
   },
   "blog": {
     "title": "Blog",
-    "description": "Artigos sobre desenvolvimento web, programação e tecnologia.",
+    "description": "Artigos sobre desenvolvimento web, construção de produtos, empreendedorismo, finanças e crescimento pessoal.",
     "articlesCount": "{count} artigos publicados",
     "noPostsYet": "Nenhum post ainda",
     "checkBackSoon": "Volte em breve para novos conteúdos!"
@@ -76,5 +77,80 @@
     "linkedin": "Compartilhar no LinkedIn",
     "copyLink": "Copiar link",
     "copied": "Copiado!"
+  },
+  "about": {
+    "pageTitle": "Sobre",
+    "pageDescription": "Conheça a jornada de Davi Giroux de engenheiro em grandes empresas a construtor independente e empreendedor.",
+    "hero": {
+      "greeting": "Olá, sou Davi Giroux",
+      "tagline": "Engenheiro, Construtor, Empreendedor",
+      "currentStatus": "Atualmente construindo",
+      "description": "Após anos trabalhando em empresas de tecnologia líderes, agora estou em uma missão para construir produtos, alcançar independência financeira e compartilhar tudo que aprendo no caminho."
+    },
+    "journey": {
+      "title": "Minha Jornada",
+      "description": "De engenharia corporativa a construção independente",
+      "timeline": {
+        "education": "Educação & Início de Carreira",
+        "bigCompany": "Trabalhando em Escala",
+        "transition": "A Transição",
+        "current": "Construindo Independentemente"
+      },
+      "content": {
+        "education": "Comecei minha carreira aprendendo fundamentos de engenharia de software e construindo uma base técnica sólida.",
+        "bigCompany": "Passei anos em empresas de tecnologia líderes, trabalhando em sistemas de grande escala e aprendendo com equipes talentosas.",
+        "transition": "Tomei a decisão de deixar a estabilidade corporativa e buscar construir produtos de forma independente.",
+        "current": "Agora focado em construir produtos do zero, documentando a jornada e compartilhando o que aprendo."
+      }
+    },
+    "mission": {
+      "title": "Missão & Visão",
+      "subtitle": "Por que estou fazendo isso",
+      "content": "Após vivenciar o mundo corporativo tech, percebi que minha paixão está em construir produtos do zero e ter impacto direto. Este blog documenta minha jornada enquanto faço a transição de empregado para empreendedor, compartilhando insights sobre desenvolvimento, finanças e crescimento pessoal.",
+      "values": {
+        "independence": {
+          "label": "Independência",
+          "description": "Construindo liberdade financeira através da criação de produtos valiosos"
+        },
+        "learning": {
+          "label": "Aprendizado",
+          "description": "Crescimento contínuo e compartilhamento de conhecimento com outros"
+        },
+        "growth": {
+          "label": "Crescimento",
+          "description": "Desenvolvendo habilidades tanto técnicas quanto de negócios"
+        }
+      }
+    },
+    "skills": {
+      "title": "Habilidades & Expertise",
+      "categories": {
+        "technical": "Técnicas",
+        "business": "Negócios & Produto",
+        "other": "Outras"
+      },
+      "items": {
+        "technical": [
+          "Desenvolvimento Web",
+          "React & Next.js",
+          "TypeScript",
+          "Node.js",
+          "Design de Sistemas",
+          "Otimização de Performance"
+        ],
+        "business": [
+          "Desenvolvimento de Produtos",
+          "Empreendedorismo",
+          "Construindo em Público",
+          "Pesquisa de Usuário"
+        ],
+        "other": [
+          "Finanças Pessoais",
+          "Estratégia de Investimento",
+          "Criação de Conteúdo",
+          "Escrita Técnica"
+        ]
+      }
+    }
   }
 }

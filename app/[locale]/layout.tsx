@@ -43,6 +43,10 @@ export async function generateMetadata({
     authors: [{ name: siteConfig.author.name }],
     creator: siteConfig.author.name,
     metadataBase: new URL(siteConfig.url),
+    icons: {
+      icon: '/icon.svg',
+      apple: '/icon.svg',
+    },
     openGraph: {
       type: "website",
       locale: locale === 'pt-BR' ? 'pt_BR' : 'en_US',

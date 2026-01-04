@@ -1,10 +1,10 @@
 export const siteConfig = {
-  name: "DevGiroux",
+  name: "DevGiroux.",
   url: "https://devgiroux.com",
   description:
-    "Personal blog about web development, programming, and technology.",
+    "Personal blog by Davi Giroux sharing insights on web development, entrepreneurship, building products, finance, and personal growth. Documenting the journey from big company engineer to independent builder.",
   author: {
-    name: "DevGiroux",
+    name: "Davi Giroux",
     twitter: "@devgiroux",
     instagram: "@devgiroux",
     youtube: "@devgiroux",
