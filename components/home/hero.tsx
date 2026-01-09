@@ -1,13 +1,11 @@
 'use client';
 
-import Link from 'next/link';
-import { useLocale, useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { getLocalizedPath, Locale } from '@/lib/i18n';
+import { Link } from '@/lib/navigation';
 
 export function Hero() {
-  const locale = useLocale() as Locale;
   const t = useTranslations('hero');
 
   return (
@@ -45,7 +43,7 @@ export function Hero() {
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20"
             >
-              <Link href={getLocalizedPath('/blog', locale)}>
+              <Link href="/blog">
                 {t('exploreArticles')}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>

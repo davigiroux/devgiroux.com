@@ -1,10 +1,8 @@
 "use client"
 
 import * as React from "react"
-import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
-import { useLocale, useTranslations } from 'next-intl'
 import { Menu, X, Search, Globe } from "lucide-react"
+import { useLocale, useTranslations } from 'next-intl'
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -16,7 +14,8 @@ import {
 import { ThemeToggle } from "./theme-toggle"
 import { siteConfig } from "@/lib/config"
 import { useSearch } from "@/components/search"
-import { getLocalizedPath, stripLocaleFromPath, Locale } from "@/lib/i18n"
+import { Link, usePathname, useRouter } from "@/lib/navigation"
+import { Locale } from "@/lib/i18n"
 
 export function Header() {
   const pathname = usePathname()
@@ -36,25 +35,19 @@ export function Header() {
 
   // Switch language while staying on same page
   const switchLocale = (newLocale: Locale) => {
-    const { path } = stripLocaleFromPath(pathname)
-    const newPath = getLocalizedPath(path, newLocale)
-    router.push(newPath)
+    router.replace(pathname, { locale: newLocale })
   }
-
-  // Get localized href
-  const getHref = (path: string) => getLocalizedPath(path, locale)
 
   // Check if path is active
   const isActive = (path: string) => {
-    const { path: currentPath } = stripLocaleFromPath(pathname)
-    return currentPath === path
+    return pathname === path
   }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md">
       <div className="container mx-auto flex h-16 max-w-4xl items-center justify-between px-4">
         <Link
-          href={getHref("/")}
+          href="/"
           className="flex items-center space-x-2 text-xl font-semibold transition-colors hover:text-primary"
         >
           <span className="bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">
@@ -67,7 +60,7 @@ export function Header() {
           {navItems.map((item) => (
             <Link
               key={item.href}
-              href={getHref(item.href)}
+              href={item.href}
               className={cn(
                 "px-4 py-2 text-sm font-light transition-colors hover:text-primary",
                 isActive(item.href)
@@ -181,7 +174,7 @@ export function Header() {
             {navItems.map((item) => (
               <Link
                 key={item.href}
-                href={getHref(item.href)}
+                href={item.href}
                 className={cn(
                   "rounded-md px-4 py-2 text-sm font-light transition-colors hover:bg-surface-hover",
                   isActive(item.href)
