@@ -1,10 +1,10 @@
 'use client';
 
-import Link from "next/link"
 import { useLocale, useTranslations } from 'next-intl'
 import { Github, Twitter, Instagram, Youtube, Rss } from "lucide-react"
 import { siteConfig } from "@/lib/config"
-import { getLocalizedPath, Locale } from "@/lib/i18n"
+import { Link } from "@/lib/navigation"
+import { Locale } from "@/lib/i18n"
 
 const socialLinks = [
   { href: siteConfig.links.twitter, icon: Twitter, label: "Twitter" },
@@ -27,7 +27,7 @@ export function Footer() {
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
           <div className="flex flex-col items-center gap-2 md:items-start">
             <Link
-              href={getLocalizedPath('/', locale)}
+              href="/"
               className="text-lg font-semibold transition-colors hover:text-primary"
             >
               <span className="bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">

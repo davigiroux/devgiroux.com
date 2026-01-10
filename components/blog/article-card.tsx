@@ -1,12 +1,12 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
 import { Calendar, Clock } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Card } from '@/components/ui/card';
 import { TagBadge } from './tag-badge';
-import { getLocalizedPath, formatShortDate, Locale } from '@/lib/i18n';
+import { formatShortDate, Locale } from '@/lib/i18n';
+import { Link } from '@/lib/navigation';
 import { cn } from '@/lib/utils';
 
 interface ArticleCardProps {
@@ -35,11 +35,10 @@ export function ArticleCard({
   const locale = useLocale() as Locale;
   const t = useTranslations('languageBadge');
 
-  const href = getLocalizedPath(`/blog/${slug}`, locale);
   const formattedDate = formatShortDate(date, locale);
 
   return (
-    <Link href={href}>
+    <Link href={`/blog/${slug}`}>
       <Card className="group overflow-hidden border-border bg-card backdrop-blur transition-all hover:border-primary/50 hover:bg-surface-hover hover:shadow-lg hover:shadow-primary/10">
         {image && (
           <div className="relative aspect-video w-full overflow-hidden">
