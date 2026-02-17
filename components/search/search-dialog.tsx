@@ -3,7 +3,8 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Fuse, { FuseResult } from 'fuse.js';
-import { Search, X, FileText, Calendar, Tag } from 'lucide-react';
+import { Search, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import {
   Dialog,
   DialogContent,
@@ -34,8 +35,8 @@ export function SearchDialog({ posts, open, onOpenChange }: SearchDialogProps) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations('search');
 
-  // Initialize Fuse.js
   const fuse = useRef(
     new Fuse(posts, {
       keys: [
@@ -50,12 +51,10 @@ export function SearchDialog({ posts, open, onOpenChange }: SearchDialogProps) {
     })
   );
 
-  // Update fuse index when posts change
   useEffect(() => {
     fuse.current.setCollection(posts);
   }, [posts]);
 
-  // Debounced search
   useEffect(() => {
     if (!query.trim()) {
       setResults([]);
@@ -72,7 +71,6 @@ export function SearchDialog({ posts, open, onOpenChange }: SearchDialogProps) {
     return () => clearTimeout(timeoutId);
   }, [query]);
 
-  // Focus input when dialog opens
   useEffect(() => {
     if (open) {
       setTimeout(() => {
@@ -85,7 +83,6 @@ export function SearchDialog({ posts, open, onOpenChange }: SearchDialogProps) {
     }
   }, [open]);
 
-  // Keyboard navigation
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.key === 'ArrowDown') {
@@ -102,7 +99,6 @@ export function SearchDialog({ posts, open, onOpenChange }: SearchDialogProps) {
     [results, selectedIndex]
   );
 
-  // Scroll selected item into view
   useEffect(() => {
     if (resultsRef.current) {
       const selectedElement = resultsRef.current.children[selectedIndex] as HTMLElement;
@@ -124,24 +120,24 @@ export function SearchDialog({ posts, open, onOpenChange }: SearchDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl p-0 gap-0 border-primary/20 bg-zinc-950" showCloseButton={false}>
+      <DialogContent className="max-w-2xl p-0 gap-0 border-border bg-background" showCloseButton={false}>
         <DialogHeader className="p-4 pb-0">
           <DialogTitle className="sr-only">Search blog posts</DialogTitle>
           <div className="relative flex items-center">
-            <Search className="absolute left-3 h-4 w-4 text-zinc-400" />
+            <Search className="absolute left-3 h-4 w-4 text-muted-foreground" />
             <Input
               ref={inputRef}
               type="text"
-              placeholder="Search posts..."
+              placeholder={t('placeholder')}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="pl-10 pr-10 border-primary/20 bg-zinc-900 text-foreground placeholder:text-zinc-500 focus-visible:ring-primary"
+              className="pl-10 pr-10 border-border bg-surface text-foreground placeholder:text-muted-foreground/50 focus-visible:ring-primary"
             />
             {query && (
               <button
                 onClick={handleClear}
-                className="absolute right-3 text-zinc-400 hover:text-primary transition-colors"
+                className="absolute right-3 text-muted-foreground hover:text-primary transition-colors"
                 aria-label="Clear search"
               >
                 <X className="h-4 w-4" />
@@ -153,98 +149,88 @@ export function SearchDialog({ posts, open, onOpenChange }: SearchDialogProps) {
         <div className="max-h-[400px] overflow-y-auto p-4" ref={resultsRef}>
           {!query && (
             <div className="flex flex-col items-center justify-center py-12 text-center">
-              <Search className="h-12 w-12 text-zinc-700 mb-4" />
-              <p className="text-sm text-zinc-400">
-                Start typing to search posts...
+              <p className="text-sm text-muted-foreground">
+                {t('startTyping')}
               </p>
-              <p className="text-xs text-zinc-600 mt-2">
-                Use ↑ ↓ to navigate, Enter to select, Esc to close
+              <p className="text-xs text-muted-foreground/50 mt-2">
+                {t('navigationHint')}
               </p>
             </div>
           )}
 
           {query && results.length === 0 && (
             <div className="flex flex-col items-center justify-center py-12 text-center">
-              <FileText className="h-12 w-12 text-zinc-700 mb-4" />
-              <p className="text-sm text-zinc-400">
-                No posts found for "{query}"
+              <p className="text-sm text-muted-foreground">
+                {t('noResults', { query })}
               </p>
-              <p className="text-xs text-zinc-600 mt-2">
-                Try different keywords or check your spelling
+              <p className="text-xs text-muted-foreground/50 mt-2">
+                {t('tryDifferent')}
               </p>
             </div>
           )}
 
           {results.length > 0 && (
-            <div className="space-y-2">
+            <div className="space-y-1">
               {results.map((result, index) => (
                 <button
                   key={result.item.slug}
                   onClick={() => handleSelectPost(result.item)}
-                  className={`w-full text-left rounded-lg border p-4 transition-all ${
+                  className={`w-full text-left rounded-md p-4 transition-all ${
                     index === selectedIndex
-                      ? 'border-primary bg-primary/10 shadow-md'
-                      : 'border-primary/20 bg-zinc-900/50 hover:border-primary/50 hover:bg-zinc-900'
+                      ? 'bg-surface-hover'
+                      : 'hover:bg-surface'
                   }`}
                 >
-                  <h3 className="font-semibold text-foreground mb-1 line-clamp-1">
+                  <h3 className="font-display font-semibold text-foreground mb-1 line-clamp-1">
                     {result.item.title}
                   </h3>
-                  <p className="text-sm text-zinc-400 mb-3 line-clamp-2">
+                  <p className="text-sm text-muted-foreground mb-2 line-clamp-2">
                     {result.item.description}
                   </p>
-                  <div className="flex flex-wrap items-center gap-3 text-xs text-zinc-500">
-                    <div className="flex items-center gap-1">
-                      <Calendar className="h-3 w-3" />
-                      <span>
-                        {new Date(result.item.date).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'short',
-                          day: 'numeric',
-                        })}
-                      </span>
-                    </div>
+                  <p className="font-mono text-xs text-muted-foreground/50">
+                    {new Date(result.item.date).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                    })}
                     {result.item.tags.length > 0 && (
                       <>
-                        <span className="text-primary/30">•</span>
-                        <div className="flex items-center gap-1">
-                          <Tag className="h-3 w-3" />
-                          <span>{result.item.tags.slice(0, 2).join(', ')}</span>
-                        </div>
+                        <span className="mx-2">&mdash;</span>
+                        {result.item.tags.slice(0, 2).join(', ')}
                       </>
                     )}
-                  </div>
+                  </p>
                 </button>
               ))}
             </div>
           )}
         </div>
 
-        <div className="border-t border-primary/20 p-3 px-4">
-          <div className="flex items-center justify-between text-xs text-zinc-500">
+        <div className="border-t border-border p-3 px-4">
+          <div className="flex items-center justify-between text-xs text-muted-foreground/50">
             <div className="flex items-center gap-4">
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 rounded bg-zinc-900 border border-primary/20 text-zinc-400">
+                <kbd className="px-1.5 py-0.5 rounded bg-surface border border-border text-muted-foreground">
                   ↑↓
                 </kbd>
                 Navigate
               </span>
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 rounded bg-zinc-900 border border-primary/20 text-zinc-400">
+                <kbd className="px-1.5 py-0.5 rounded bg-surface border border-border text-muted-foreground">
                   ↵
                 </kbd>
                 Select
               </span>
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 rounded bg-zinc-900 border border-primary/20 text-zinc-400">
+                <kbd className="px-1.5 py-0.5 rounded bg-surface border border-border text-muted-foreground">
                   Esc
                 </kbd>
                 Close
               </span>
             </div>
             {results.length > 0 && (
-              <span className="text-zinc-600">
-                {results.length} result{results.length !== 1 ? 's' : ''}
+              <span className="text-muted-foreground/50">
+                {t('results', { count: results.length })}
               </span>
             )}
           </div>

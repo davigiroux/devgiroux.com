@@ -5,15 +5,10 @@
     "blog": "Blog"
   },
   "hero": {
-    "badge": "Bem-vindo ao DevGiroux.",
     "title1": "Construindo, Aprendendo,",
     "title2": "Compartilhando a Jornada",
     "description": "De engenheiro em grandes empresas a construtor independente. Junte-se a mim enquanto exploro desenvolvimento web, empreendedorismo, finanças e crescimento pessoal construindo produtos e documentando a jornada.",
-    "exploreArticles": "Explorar Artigos",
-    "latestPosts": "Posts Recentes",
-    "articles": "Artigos",
-    "topics": "Tópicos",
-    "readers": "Leitores"
+    "readBlog": "Ler o blog"
   },
   "sections": {
     "featuredArticles": "Artigos em Destaque",
@@ -66,11 +61,13 @@
   "errors": {
     "notFound": "Página não encontrada",
     "notFoundDescription": "A página que você procura não existe.",
+    "notFoundHumor": "Parece que essa página se perdeu. Até o Frodo se perde às vezes.",
     "backHome": "Voltar ao início"
   },
   "footer": {
     "copyright": "Todos os direitos reservados",
-    "builtWith": "Feito com"
+    "builtWith": "Feito com",
+    "tagline": "Construindo, aprendendo, compartilhando."
   },
   "share": {
     "twitter": "Compartilhar no Twitter",

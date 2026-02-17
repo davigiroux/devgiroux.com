@@ -1,7 +1,6 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { User, Sparkles } from 'lucide-react';
 import { siteConfig } from '@/lib/config';
 
 export function AboutHero() {
@@ -15,53 +14,48 @@ export function AboutHero() {
   ];
 
   return (
-    <section className="relative overflow-hidden border-b border-border bg-gradient-to-b from-background via-background to-surface">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/20 via-transparent to-transparent" />
-      <div className="absolute inset-0 bg-grid-primary/[0.02] bg-[size:32px_32px]" />
+    <section className="py-32">
+      <div className="container mx-auto max-w-5xl px-4">
+        <div className="max-w-3xl">
+          {/* Small caps label */}
+          <p className="mb-6 text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground animate-reveal-up">
+            ABOUT
+          </p>
 
-      <div className="container relative mx-auto px-4 py-24 sm:py-32">
-        <div className="mx-auto max-w-3xl text-center">
-          {/* Avatar placeholder */}
-          <div className="mb-8 inline-flex h-32 w-32 items-center justify-center rounded-full border-4 border-primary/20 bg-primary/10 backdrop-blur">
-            <User className="h-16 w-16 text-primary" />
-          </div>
-
-          {/* Greeting */}
-          <h1 className="mb-4 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+          {/* Display font greeting */}
+          <h1 className="mb-4 font-display text-5xl font-bold leading-[1.05] text-foreground animate-text-reveal lg:text-7xl">
             {t('greeting')}
           </h1>
 
           {/* Tagline */}
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-medium text-primary backdrop-blur">
-            <Sparkles className="h-4 w-4" />
-            <span>{t('tagline')}</span>
-          </div>
-
-          {/* Current status */}
-          <p className="mb-6 text-lg text-muted-foreground">
-            <span className="font-semibold text-primary">{t('currentStatus')}</span>
+          <p className="mb-8 text-lg font-medium text-primary animate-reveal-up" style={{ animationDelay: '150ms' }}>
+            {t('tagline')}
           </p>
 
           {/* Description */}
-          <p className="mb-10 text-lg leading-relaxed text-muted-foreground sm:text-xl">
+          <p className="mb-10 max-w-2xl text-lg font-light leading-relaxed text-muted-foreground animate-reveal-up" style={{ animationDelay: '300ms' }}>
             {t('description')}
           </p>
 
-          {/* Social Links */}
-          <div className="flex flex-wrap justify-center gap-4">
-            {socialLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-lg border border-border bg-surface px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary hover:bg-primary/10 hover:text-primary"
-              >
-                {link.name}
-              </a>
+          {/* Social links as inline text */}
+          <p className="text-sm text-muted-foreground animate-reveal-up" style={{ animationDelay: '450ms' }}>
+            Find me on{' '}
+            {socialLinks.map((link, i) => (
+              <span key={link.name}>
+                {i > 0 && i < socialLinks.length - 1 && ', '}
+                {i === socialLinks.length - 1 && ', and '}
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground transition-colors hover:text-primary"
+                >
+                  {link.name}
+                </a>
+              </span>
             ))}
-          </div>
+            .
+          </p>
         </div>
       </div>
     </section>

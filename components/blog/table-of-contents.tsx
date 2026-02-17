@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface Heading {
   id: string;
@@ -16,7 +16,7 @@ interface TableOfContentsProps {
 export function TableOfContents({ selector = 'article' }: TableOfContentsProps) {
   const [headings, setHeadings] = useState<Heading[]>([]);
   const [activeId, setActiveId] = useState<string>('');
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const t = useTranslations('article');
 
   useEffect(() => {
     const container = document.querySelector(selector);
@@ -77,42 +77,30 @@ export function TableOfContents({ selector = 'article' }: TableOfContentsProps) 
 
   return (
     <nav className="sticky top-20 hidden lg:block">
-      <div className="rounded-lg border border-border bg-card backdrop-blur">
-        <button
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          className="flex w-full items-center justify-between p-4 text-sm font-semibold text-foreground hover:text-primary transition-colors lg:cursor-default"
-          aria-expanded={!isCollapsed}
-        >
-          <span>Table of Contents</span>
-          <span className="lg:hidden">
-            {isCollapsed ? <ChevronDown className="h-4 w-4" /> : <ChevronUp className="h-4 w-4" />}
-          </span>
-        </button>
+      <p className="mb-4 text-xs font-medium uppercase tracking-widest text-muted-foreground">
+        {t('onThisPage')}
+      </p>
 
-        {!isCollapsed && (
-          <ul className="space-y-1 p-4 pt-0">
-            {headings.map(({ id, text, level }) => (
-              <li
-                key={id}
-                style={{ paddingLeft: `${(level - 2) * 0.75}rem` }}
-                className="transition-all"
-              >
-                <a
-                  href={`#${id}`}
-                  onClick={(e) => handleClick(e, id)}
-                  className={`block py-1.5 text-sm transition-colors ${
-                    activeId === id
-                      ? 'font-medium text-primary border-l-2 border-primary pl-3 -ml-3'
-                      : 'text-muted-foreground hover:text-primary'
-                  }`}
-                >
-                  {text}
-                </a>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+      <ul className="space-y-1">
+        {headings.map(({ id, text, level }) => (
+          <li
+            key={id}
+            style={{ paddingLeft: `${(level - 2) * 0.75}rem` }}
+          >
+            <a
+              href={`#${id}`}
+              onClick={(e) => handleClick(e, id)}
+              className={`block py-1 text-[13px] transition-colors ${
+                activeId === id
+                  ? 'font-medium text-foreground border-l-2 border-primary pl-3 -ml-[2px]'
+                  : 'text-muted-foreground/70 hover:text-muted-foreground'
+              }`}
+            >
+              {text}
+            </a>
+          </li>
+        ))}
+      </ul>
     </nav>
   );
 }
