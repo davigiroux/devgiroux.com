@@ -333,6 +333,7 @@ html {
 
 /* Article content styling */
 .article-content {
+  font-family: var(--font-sans);
   font-size: 1.125rem;
   line-height: 1.85;
   color: var(--foreground);
@@ -349,6 +350,7 @@ html {
 .article-content h4,
 .article-content h5,
 .article-content h6 {
+  font-family: var(--font-display), serif;
   color: var(--foreground);
   scroll-margin-top: 5rem;
 }

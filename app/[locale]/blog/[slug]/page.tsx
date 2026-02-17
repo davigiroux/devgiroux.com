@@ -115,12 +115,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               availableLocales={post.availableLocales}
             />
 
-            {/* Article with decorative left margin */}
-            <div className="border-l border-border/20 pl-6 lg:pl-8">
-              <article className="article-content max-w-none">
-                {content}
-              </article>
-            </div>
+            <article className="article-content max-w-none">
+              {content}
+            </article>
 
             {/* Three-dot section break */}
             <div className="my-12 text-center text-2xl tracking-[1em] text-muted-foreground/40 select-none">
