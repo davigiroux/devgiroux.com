@@ -64,12 +64,12 @@ function InlineCode({ children, ...props }: React.HTMLAttributes<HTMLElement>) {
 }
 
 const headingStyles = {
-  1: "text-4xl font-bold mt-16 mb-8 leading-tight",
-  2: "text-3xl font-bold mt-14 mb-6 leading-tight",
-  3: "text-2xl font-semibold mt-12 mb-5 leading-snug",
-  4: "text-xl font-semibold mt-10 mb-4 leading-snug",
-  5: "text-lg font-semibold mt-8 mb-3 leading-normal",
-  6: "text-md font-semibold mt-6 mb-3 leading-normal",
+  1: "font-display text-4xl font-bold mt-16 mb-8 leading-tight",
+  2: "font-display text-3xl font-bold mt-14 mb-6 leading-tight",
+  3: "font-display text-2xl font-semibold mt-12 mb-5 leading-snug",
+  4: "font-display text-xl font-semibold mt-10 mb-4 leading-snug",
+  5: "font-display text-lg font-semibold mt-8 mb-3 leading-normal",
+  6: "font-display text-md font-semibold mt-6 mb-3 leading-normal",
 };
 
 const createHeading = (level: 1 | 2 | 3 | 4 | 5 | 6) => {
@@ -167,7 +167,7 @@ export const MDXComponents = {
     </li>
   ),
   p: ({ children, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
-    <p className="mb-6 text-foreground text-lg leading-relaxed" {...props}>
+    <p className="font-sans mb-6 text-foreground text-lg leading-relaxed" {...props}>
       {children}
     </p>
   ),

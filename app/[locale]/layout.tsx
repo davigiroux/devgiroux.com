@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Lexend_Deca, Geist_Mono } from "next/font/google"
+import { Lexend_Deca, Geist_Mono, Playfair_Display } from "next/font/google"
 import { Analytics } from "@vercel/analytics/react"
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
@@ -21,6 +21,12 @@ const lexend = Lexend_Deca({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+})
+
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin"],
+  weight: ["700", "900"],
 })
 
 export function generateStaticParams() {
@@ -105,7 +111,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body
-        className={`${lexend.variable} ${geistMono.variable} font-sans antialiased`}
+        className={`${lexend.variable} ${geistMono.variable} ${playfair.variable} font-sans antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider

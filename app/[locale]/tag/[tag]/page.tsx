@@ -1,12 +1,10 @@
 import { Metadata } from 'next';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { getPostsByTag, getAllTags } from '@/lib/posts';
 import { ArticleCard } from '@/components/blog/article-card';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft, Tag as TagIcon } from 'lucide-react';
 import { locales, Locale, getLocalizedPath } from '@/lib/i18n';
+import { Link } from '@/lib/navigation';
 
 interface TagPageProps {
   params: Promise<{ locale: string; tag: string }>;
@@ -60,40 +58,31 @@ export default async function TagPage({ params }: TagPageProps) {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-16 sm:py-24">
-        {/* Back Button */}
+      <div className="container mx-auto max-w-5xl px-4 py-16 sm:py-24">
+        {/* Back link — plain text */}
         <div className="mb-8">
-          <Button
-            asChild
-            variant="ghost"
-            className="text-muted-foreground hover:text-primary"
+          <Link
+            href="/blog"
+            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
-            <Link href={getLocalizedPath('/blog', typedLocale)}>
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              {tArticle('backToBlog')}
-            </Link>
-          </Button>
+            &larr; {tArticle('backToBlog')}
+          </Link>
         </div>
 
         {/* Header */}
-        <div className="mb-12">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
-            <TagIcon className="h-4 w-4" />
-            <span>{tArticle('tag')}</span>
-          </div>
-
-          <h1 className="text-4xl font-bold text-foreground sm:text-5xl">
+        <div className="mb-8">
+          <h1 className="font-display text-5xl font-bold text-foreground">
             {decodedTag}
           </h1>
-
-          <p className="mt-4 text-lg text-muted-foreground">
-            {t('articlesTagged', { count: posts.length })}{' '}
-            <span className="text-primary">{decodedTag}</span>
+          <p className="mt-3 font-mono text-sm text-muted-foreground/70">
+            {t('articlesTagged', { count: posts.length })}
           </p>
         </div>
 
-        {/* Posts Grid */}
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mb-12 h-px bg-border" />
+
+        {/* Posts — 2-column grid */}
+        <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2">
           {posts.map((post) => (
             <ArticleCard
               key={post.slug}

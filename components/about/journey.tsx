@@ -1,91 +1,54 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { GraduationCap, Building2, Rocket, Code } from 'lucide-react';
 
 export function Journey() {
   const t = useTranslations('about.journey');
 
-  const timelineItems = [
-    {
-      icon: GraduationCap,
-      label: t('timeline.education'),
-      key: 'education',
-    },
-    {
-      icon: Building2,
-      label: t('timeline.bigCompany'),
-      key: 'bigCompany',
-    },
-    {
-      icon: Rocket,
-      label: t('timeline.transition'),
-      key: 'transition',
-    },
-    {
-      icon: Code,
-      label: t('timeline.current'),
-      key: 'current',
-    },
+  const milestones = [
+    { key: 'education', label: t('timeline.education') },
+    { key: 'bigCompany', label: t('timeline.bigCompany') },
+    { key: 'transition', label: t('timeline.transition') },
+    { key: 'current', label: t('timeline.current') },
   ];
 
   return (
-    <section className="border-b border-border bg-surface py-16 sm:py-24">
-      <div className="container mx-auto px-4">
-        <div className="mx-auto max-w-3xl">
-          {/* Section Header */}
-          <div className="mb-12 text-center">
-            <h2 className="mb-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              {t('title')}
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              {t('description')}
-            </p>
-          </div>
+    <section className="bg-surface py-16 sm:py-24">
+      <div className="container mx-auto max-w-5xl px-4">
+        <div className="max-w-3xl">
+          {/* Section label */}
+          <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+            THE JOURNEY
+          </p>
+          <div className="mb-8 h-px bg-border animate-draw-line" />
 
-          {/* Timeline */}
-          <div className="relative">
-            {/* Vertical line */}
-            <div className="absolute left-8 top-0 h-full w-0.5 bg-gradient-to-b from-primary via-primary/50 to-transparent sm:left-1/2 sm:-translate-x-1/2" />
+          <h2 className="mb-4 font-display text-3xl font-bold text-foreground">
+            {t('title')}
+          </h2>
+          <p className="mb-12 text-muted-foreground">
+            {t('description')}
+          </p>
 
-            {/* Timeline items */}
-            <div className="space-y-12">
-              {timelineItems.map((item, index) => {
-                const Icon = item.icon;
-                const isEven = index % 2 === 0;
+          {/* Milestones — year markers + prose */}
+          <div className="space-y-0">
+            {milestones.map((item) => (
+              <div
+                key={item.key}
+                className="flex flex-col gap-2 border-b border-border/50 py-8 last:border-b-0 sm:flex-row sm:gap-6"
+              >
+                {/* Year/period marker */}
+                <div className="shrink-0 sm:w-48">
+                  <span className="font-mono text-sm font-medium text-primary">
+                    {item.label}
+                  </span>
+                </div>
 
-                return (
-                  <div
-                    key={item.key}
-                    className={`relative flex items-center gap-8 ${
-                      isEven ? 'sm:flex-row' : 'sm:flex-row-reverse'
-                    }`}
-                  >
-                    {/* Icon */}
-                    <div className="relative z-10 flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full border-4 border-background bg-primary shadow-lg sm:absolute sm:left-1/2 sm:-translate-x-1/2">
-                      <Icon className="h-8 w-8 text-primary-foreground" />
-                    </div>
-
-                    {/* Content */}
-                    <div
-                      className={`flex-1 rounded-lg border border-border bg-background p-6 shadow-sm transition-all hover:shadow-md sm:max-w-[calc(50%-3rem)] ${
-                        isEven ? 'sm:text-right sm:mr-12' : 'sm:text-left sm:ml-12'
-                      }`}
-                    >
-                      <h3 className="text-xl font-semibold text-foreground">
-                        {item.label}
-                      </h3>
-                      <p className="mt-2 text-muted-foreground">
-                        {t(`content.${item.key}`)}
-                      </p>
-                    </div>
-
-                    {/* Spacer for desktop layout */}
-                    <div className="hidden flex-1 sm:block" />
-                  </div>
-                );
-              })}
-            </div>
+                {/* Description */}
+                <p className="flex-1 leading-relaxed text-muted-foreground">
+                  {t(`content.${item.key}`)}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -1,71 +1,54 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { Target, Heart, TrendingUp } from 'lucide-react';
 
 export function Mission() {
   const t = useTranslations('about.mission');
 
   const values = [
-    {
-      icon: Target,
-      label: t('values.independence.label'),
-      description: t('values.independence.description'),
-    },
-    {
-      icon: Heart,
-      label: t('values.learning.label'),
-      description: t('values.learning.description'),
-    },
-    {
-      icon: TrendingUp,
-      label: t('values.growth.label'),
-      description: t('values.growth.description'),
-    },
+    { key: 'independence', number: '01' },
+    { key: 'learning', number: '02' },
+    { key: 'growth', number: '03' },
   ];
 
   return (
-    <section className="border-b border-border bg-background py-16 sm:py-24">
-      <div className="container mx-auto px-4">
-        <div className="mx-auto max-w-3xl">
-          {/* Section Header */}
-          <div className="mb-12 text-center">
-            <h2 className="mb-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-              {t('title')}
-            </h2>
-            <p className="text-lg font-medium text-primary">
-              {t('subtitle')}
-            </p>
-          </div>
+    <section className="py-16 sm:py-24">
+      <div className="container mx-auto max-w-5xl px-4">
+        <div className="max-w-3xl">
+          {/* Section label */}
+          <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+            MISSION
+          </p>
+          <div className="mb-12 h-px bg-border animate-draw-line" />
 
-          {/* Mission Statement */}
-          <div className="mb-12 rounded-lg border border-primary/20 bg-primary/5 p-8">
-            <p className="text-lg leading-relaxed text-foreground">
+          {/* Mission statement as pull-quote */}
+          <blockquote className="mb-16 border-l-4 border-accent-warm pl-8">
+            <p className="text-2xl font-light leading-relaxed text-foreground lg:text-3xl">
               {t('content')}
             </p>
-          </div>
+          </blockquote>
 
-          {/* Core Values */}
-          <div className="grid gap-6 sm:grid-cols-3">
-            {values.map((value) => {
-              const Icon = value.icon;
-              return (
-                <div
-                  key={value.label}
-                  className="rounded-lg border border-border bg-surface p-6 text-center transition-all hover:border-primary/50 hover:shadow-md"
-                >
-                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                    <Icon className="h-6 w-6 text-primary" />
-                  </div>
-                  <h3 className="mb-2 font-semibold text-foreground">
-                    {value.label}
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    {value.description}
+          {/* Values as numbered list */}
+          <h3 className="mb-8 text-xl font-semibold text-foreground">
+            {t('subtitle')}
+          </h3>
+
+          <div className="space-y-6">
+            {values.map((value) => (
+              <div key={value.key} className="flex gap-4">
+                <span className="shrink-0 font-mono text-sm text-primary">
+                  {value.number}
+                </span>
+                <div>
+                  <p className="font-semibold text-foreground">
+                    {t(`values.${value.key}.label`)}
+                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {t(`values.${value.key}.description`)}
                   </p>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         </div>
       </div>

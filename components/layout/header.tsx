@@ -25,7 +25,16 @@ export function Header() {
   const tLang = useTranslations('language')
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
+  const [isScrolled, setIsScrolled] = React.useState(false)
   const { openSearch } = useSearch()
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10)
+    }
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   const navItems = [
     { href: "/", label: t("home") },
@@ -33,63 +42,72 @@ export function Header() {
     { href: "/blog", label: t("blog") },
   ]
 
-  // Switch language while staying on same page
   const switchLocale = (newLocale: Locale) => {
     router.replace(pathname, { locale: newLocale })
   }
 
-  // Check if path is active
   const isActive = (path: string) => {
     return pathname === path
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md">
-      <div className="container mx-auto flex h-16 max-w-4xl items-center justify-between px-4">
+    <header
+      className={cn(
+        "sticky top-0 z-50 w-full bg-background transition-[border-color] duration-300",
+        isScrolled ? "border-b border-border" : "border-b border-transparent"
+      )}
+    >
+      <div className="container mx-auto flex h-16 max-w-5xl items-center justify-between px-4">
+        {/* Logo — display font, period in primary */}
         <Link
           href="/"
-          className="flex items-center space-x-2 text-xl font-semibold transition-colors hover:text-primary"
+          className="font-display text-lg font-bold text-foreground transition-colors hover:opacity-80"
         >
-          <span className="bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">
-            {siteConfig.name}
-          </span>
+          DevGiroux<span className="text-primary">.</span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden items-center space-x-1 md:flex">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "px-4 py-2 text-sm font-light transition-colors hover:text-primary",
-                isActive(item.href)
-                  ? "text-primary"
-                  : "text-muted-foreground"
+        {/* Desktop Navigation — editorial style */}
+        <nav className="hidden items-center md:flex">
+          {navItems.map((item, i) => (
+            <React.Fragment key={item.href}>
+              {i > 0 && (
+                <span className="mx-3 text-border select-none">|</span>
               )}
-            >
-              {item.label}
-            </Link>
+              <Link
+                href={item.href}
+                className={cn(
+                  "text-sm uppercase tracking-wide transition-colors",
+                  isActive(item.href)
+                    ? "font-medium text-foreground"
+                    : "font-light text-muted-foreground hover:text-foreground"
+                )}
+              >
+                {item.label}
+              </Link>
+            </React.Fragment>
           ))}
+        </nav>
+
+        {/* Desktop Utility — smaller, tighter */}
+        <div className="hidden items-center gap-1 md:flex">
           <Button
             variant="ghost"
             size="icon"
-            className="h-9 w-9 transition-colors hover:bg-surface-hover"
+            className="h-8 w-8 transition-colors hover:bg-surface-hover"
             onClick={openSearch}
           >
-            <Search className="h-4 w-4" />
+            <Search className="h-3.5 w-3.5" />
             <span className="sr-only">Search</span>
           </Button>
 
-          {/* Language Switcher */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-9 w-9 transition-colors hover:bg-surface-hover"
+                className="h-8 w-8 transition-colors hover:bg-surface-hover"
               >
-                <Globe className="h-4 w-4" />
+                <Globe className="h-3.5 w-3.5" />
                 <span className="sr-only">{tLang('switch')}</span>
               </Button>
             </DropdownMenuTrigger>
@@ -110,28 +128,27 @@ export function Header() {
           </DropdownMenu>
 
           <ThemeToggle />
-        </nav>
+        </div>
 
-        {/* Mobile Navigation Toggle */}
-        <div className="flex items-center space-x-2 md:hidden">
+        {/* Mobile Controls */}
+        <div className="flex items-center gap-1 md:hidden">
           <Button
             variant="ghost"
             size="icon"
-            className="h-9 w-9"
+            className="h-8 w-8"
             onClick={openSearch}
           >
-            <Search className="h-4 w-4" />
+            <Search className="h-3.5 w-3.5" />
           </Button>
 
-          {/* Mobile Language Switcher */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-9 w-9"
+                className="h-8 w-8"
               >
-                <Globe className="h-4 w-4" />
+                <Globe className="h-3.5 w-3.5" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -151,35 +168,36 @@ export function Header() {
           </DropdownMenu>
 
           <ThemeToggle />
+
           <Button
             variant="ghost"
             size="icon"
-            className="h-9 w-9"
+            className="h-8 w-8"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? (
-              <X className="h-5 w-5" />
+              <X className="h-4 w-4" />
             ) : (
-              <Menu className="h-5 w-5" />
+              <Menu className="h-4 w-4" />
             )}
             <span className="sr-only">Toggle menu</span>
           </Button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu — editorial style */}
       {isMenuOpen && (
         <div className="border-t border-border md:hidden">
-          <nav className="container mx-auto flex flex-col space-y-1 px-4 py-4">
+          <nav className="container mx-auto flex flex-col px-4 py-4 stagger-children">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "rounded-md px-4 py-2 text-sm font-light transition-colors hover:bg-surface-hover",
+                  "animate-reveal-up py-2 text-sm uppercase tracking-wide transition-colors",
                   isActive(item.href)
-                    ? "text-primary"
-                    : "text-muted-foreground"
+                    ? "font-medium text-foreground"
+                    : "font-light text-muted-foreground"
                 )}
                 onClick={() => setIsMenuOpen(false)}
               >

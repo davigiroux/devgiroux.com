@@ -5,15 +5,10 @@
     "blog": "Blog"
   },
   "hero": {
-    "badge": "Welcome to DevGiroux.",
     "title1": "Building, Learning,",
     "title2": "Sharing the Journey",
     "description": "From big company engineer to independent builder. Join me as I explore web development, entrepreneurship, finance, and personal growth while building products and documenting the journey.",
-    "exploreArticles": "Explore Articles",
-    "latestPosts": "Latest Posts",
-    "articles": "Articles",
-    "topics": "Topics",
-    "readers": "Readers"
+    "readBlog": "Read the blog"
   },
   "sections": {
     "featuredArticles": "Featured Articles",
@@ -66,11 +61,13 @@
   "errors": {
     "notFound": "Page not found",
     "notFoundDescription": "The page you're looking for doesn't exist.",
+    "notFoundHumor": "Looks like this page wandered off. Even Frodo gets lost sometimes.",
     "backHome": "Back to home"
   },
   "footer": {
     "copyright": "All rights reserved",
-    "builtWith": "Built with"
+    "builtWith": "Built with",
+    "tagline": "Building, learning, sharing."
   },
   "share": {
     "twitter": "Share on Twitter",

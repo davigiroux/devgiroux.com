@@ -101,49 +101,52 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-12">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_250px]">
-            {/* Main Content */}
-            <div className="min-w-0">
-              <ArticleHeader
-                title={post.frontmatter.title}
-                date={post.frontmatter.date}
-                readingTime={post.readingTime}
-                tags={post.frontmatter.tags}
-                image={post.frontmatter.coverImage}
-                isFallback={post.isFallback}
-                availableLocales={post.availableLocales}
-              />
+      <div className="container mx-auto max-w-5xl px-4 py-12">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_220px]">
+          {/* Main Content */}
+          <div className="min-w-0 max-w-3xl">
+            <ArticleHeader
+              title={post.frontmatter.title}
+              date={post.frontmatter.date}
+              readingTime={post.readingTime}
+              tags={post.frontmatter.tags}
+              image={post.frontmatter.coverImage}
+              isFallback={post.isFallback}
+              availableLocales={post.availableLocales}
+            />
 
-              <article className="article-content max-w-none">
-                {content}
-              </article>
+            <article className="article-content max-w-none">
+              {content}
+            </article>
 
-              <div className="mt-12 border-t border-border pt-8">
-                <ShareButtons
-                  url={url}
-                  title={post.frontmatter.title}
-                  description={post.frontmatter.description}
-                />
-              </div>
-
-              {siteConfig.giscus.repoId && siteConfig.giscus.categoryId && (
-                <GiscusComments
-                  repo={siteConfig.giscus.repo}
-                  repoId={siteConfig.giscus.repoId}
-                  category={siteConfig.giscus.category}
-                  categoryId={siteConfig.giscus.categoryId}
-                  slug={slug}
-                />
-              )}
+            {/* Three-dot section break */}
+            <div className="my-12 text-center text-2xl tracking-[1em] text-muted-foreground/40 select-none">
+              &middot;&middot;&middot;
             </div>
 
-            {/* Sidebar */}
-            <aside className="hidden lg:block">
-              <TableOfContents selector="article" />
-            </aside>
+            <div className="pt-4">
+              <ShareButtons
+                url={url}
+                title={post.frontmatter.title}
+                description={post.frontmatter.description}
+              />
+            </div>
+
+            {siteConfig.giscus.repoId && siteConfig.giscus.categoryId && (
+              <GiscusComments
+                repo={siteConfig.giscus.repo}
+                repoId={siteConfig.giscus.repoId}
+                category={siteConfig.giscus.category}
+                categoryId={siteConfig.giscus.categoryId}
+                slug={slug}
+              />
+            )}
           </div>
+
+          {/* Sidebar */}
+          <aside className="hidden lg:block">
+            <TableOfContents selector="article" />
+          </aside>
         </div>
       </div>
 

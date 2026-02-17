@@ -1,43 +1,39 @@
 import { Link } from '@/lib/navigation';
-import { Badge } from '@/components/ui/badge';
 
 interface TagBadgeProps {
   tag: string;
   count?: number;
-  variant?: 'default' | 'secondary' | 'outline';
   href?: string;
   onClick?: () => void;
 }
 
-export function TagBadge({ tag, count, variant = 'secondary', href, onClick }: TagBadgeProps) {
-  const badgeContent = (
+export function TagBadge({ tag, count, href, onClick }: TagBadgeProps) {
+  const content = (
     <>
+      {count !== undefined && (
+        <span className="mr-1 font-mono text-primary/50">({count})</span>
+      )}
       {tag}
-      {count !== undefined && <span className="ml-1 text-xs opacity-70">({count})</span>}
     </>
   );
 
-  const badgeClasses = "transition-colors hover:bg-primary/20 hover:border-primary/50";
+  const className = "text-xs uppercase tracking-wide text-muted-foreground transition-colors hover:text-primary";
 
   if (href) {
     return (
-      <Link href={href} onClick={onClick}>
-        <Badge variant={variant} className={badgeClasses}>
-          {badgeContent}
-        </Badge>
+      <Link href={href} onClick={onClick} className={className}>
+        {content}
       </Link>
     );
   }
 
   if (onClick) {
     return (
-      <button onClick={onClick} type="button">
-        <Badge variant={variant} className={badgeClasses}>
-          {badgeContent}
-        </Badge>
+      <button onClick={onClick} type="button" className={className}>
+        {content}
       </button>
     );
   }
 
-  return <Badge variant={variant}>{badgeContent}</Badge>;
+  return <span className="text-xs uppercase tracking-wide text-muted-foreground">{content}</span>;
 }

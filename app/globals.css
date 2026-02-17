@@ -7,8 +7,10 @@
   --color-foreground: var(--foreground);
   --color-surface: var(--surface);
   --color-surface-hover: var(--surface-hover);
+  --color-accent-warm: var(--accent-warm);
   --font-sans: var(--font-lexend);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-playfair);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -55,6 +57,7 @@
   --foreground: #0a0a0f;
   --surface: #ffffff;
   --surface-hover: #f5f5f5;
+  --accent-warm: #b8930a;
   --card: #ffffff;
   --card-foreground: #0a0a0f;
   --popover: #ffffff;
@@ -93,6 +96,7 @@
   --foreground: #f1f5f9;
   --surface: #12121a;
   --surface-hover: #1a1a24;
+  --accent-warm: #d4a006;
   --card: #12121a;
   --card-foreground: #f1f5f9;
   --popover: #12121a;
@@ -158,9 +162,9 @@ html {
   background: #3f3f46;
 }
 
-/* Typography improvements */
+/* Typography — amber selection for personality */
 ::selection {
-  background: #06b6d4;
+  background: var(--accent-warm);
   color: #ffffff;
 }
 
@@ -175,7 +179,7 @@ html {
   --tw-prose-bullets: var(--primary);
   --tw-prose-hr: var(--border);
   --tw-prose-quotes: var(--muted-foreground);
-  --tw-prose-quote-borders: var(--primary);
+  --tw-prose-quote-borders: var(--accent-warm);
   --tw-prose-captions: var(--muted-foreground);
   --tw-prose-code: var(--primary);
   --tw-prose-pre-code: var(--foreground);
@@ -192,7 +196,7 @@ html {
 [data-rehype-pretty-code-figure] pre,
 [data-rehype-pretty-code-figure] pre code {
   padding: 1rem;
-  border-radius: 0.5rem;
+  border-radius: 0.375rem;
   overflow-x: auto;
   background: #1e1e2e !important;
   background-color: #1e1e2e !important;
@@ -247,7 +251,7 @@ html {
 
 /* Inline code */
 :not(pre) > code {
-  padding: 0.2rem 0.4rem;
+  padding: 0.15rem 0.35rem;
   border-radius: 0.25rem;
   background: var(--code);
   font-size: 0.875em;
@@ -259,11 +263,11 @@ html {
   outline-offset: 2px;
 }
 
-/* Animations */
-@keyframes fade-in {
+/* Animations — distinctive, not generic */
+@keyframes reveal-up {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -271,142 +275,68 @@ html {
   }
 }
 
-.animate-fade-in {
-  animation: fade-in 0.5s ease-out;
-}
-
-@keyframes slide-up {
+@keyframes text-reveal {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateX(-16px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
   }
 }
 
-.animate-slide-up {
-  animation: slide-up 0.6s ease-out;
+@keyframes image-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
-/* Article content styling */
+@keyframes draw-line {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.animate-reveal-up {
+  animation: reveal-up 0.5s ease-out both;
+}
+
+.animate-text-reveal {
+  animation: text-reveal 0.7s ease-out both;
+}
+
+.animate-image-enter {
+  animation: image-enter 0.6s ease-out both;
+}
+
+.animate-draw-line {
+  animation: draw-line 0.6s ease-out both;
+  transform-origin: left;
+}
+
+/* Staggered children */
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 80ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 160ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 240ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 320ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 400ms; }
+
+/* Article content styling — base only; element styles handled by MDX components */
 .article-content {
-  font-size: 1.125rem;
-  line-height: 1.75;
+  font-family: var(--font-lexend);
   color: var(--foreground);
 }
 
 .article-content p {
-  margin-bottom: 1.5rem;
-}
-
-.article-content h1,
-.article-content h2,
-.article-content h3,
-.article-content h4,
-.article-content h5,
-.article-content h6 {
-  color: var(--foreground);
-  scroll-margin-top: 5rem;
-}
-
-.article-content h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  margin-top: 4rem;
-  margin-bottom: 2rem;
-}
-
-.article-content h2 {
-  font-size: 2.25rem;
-  font-weight: 700;
-  margin-top: 3.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.article-content h3 {
-  font-size: 1.875rem;
-  font-weight: 600;
-  margin-top: 3rem;
-  margin-bottom: 1.25rem;
-}
-
-.article-content h4 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-top: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.article-content ul,
-.article-content ol {
-  margin: 2rem 0;
-  padding-left: 1.5rem;
-}
-
-.article-content ul {
-  list-style-type: disc;
-}
-
-.article-content ol {
-  list-style-type: decimal;
-}
-
-.article-content li {
-  margin-bottom: 0.75rem;
-  padding-left: 0.5rem;
-}
-
-.article-content blockquote {
-  border-left: 4px solid var(--primary);
-  padding-left: 1.5rem;
-  margin: 2rem 0;
-  font-style: italic;
-  color: var(--muted-foreground);
-}
-
-.article-content strong {
-  font-weight: 700;
-  color: var(--foreground);
-}
-
-.article-content em {
-  font-style: italic;
-}
-
-.article-content hr {
-  margin: 3rem 0;
-  border-color: var(--border);
-}
-
-.article-content a {
-  color: var(--primary);
-  text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, var(--primary) 30%, transparent);
-  transition: color 0.2s, text-decoration-color 0.2s;
-}
-
-.article-content a:hover {
-  color: color-mix(in srgb, var(--primary) 80%, white);
-  text-decoration-color: color-mix(in srgb, var(--primary) 50%, transparent);
-}
-
-.article-content table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 2rem 0;
-}
-
-.article-content th,
-.article-content td {
-  border: 1px solid var(--border);
-  padding: 0.75rem 1rem;
-  text-align: left;
-}
-
-.article-content th {
-  background: color-mix(in srgb, var(--primary) 10%, transparent);
-  font-weight: 600;
-  color: var(--foreground);
+  text-wrap: pretty;
 }
