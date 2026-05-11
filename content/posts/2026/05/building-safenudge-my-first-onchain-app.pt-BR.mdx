@@ -1,0 +1,70 @@
+---
+title: "Criando o SafeNudge: meu primeiro app onchain na Solana"
+date: "2026-05-09"
+description: "Como construí o SafeNudge na Solana com Rust — meu primeiro app onchain: um dApp de poupança em grupo inspirado nos MOAIs. História e aprendizados."
+tags: ["web3", "onchain", "solana", "project", "rust", "savings"]
+coverImage: "/images/blog/building-safenudge-my-first-onchain-app.png"
+draft: false
+featured: false
+lang: "pt-BR"
+faq:
+  - question: "O que é o SafeNudge?"
+    answer: "O SafeNudge é um app de poupança em grupo na Solana. Você e seus amigos se comprometem a guardar dinheiro juntos, e a blockchain garante as regras — depósitos, prazos e penalidades por faltar com o compromisso."
+  - question: "O SafeNudge já está no ar? Dá pra usar agora?"
+    answer: "Ainda não na mainnet — o app está em fase de testes na devnet da Solana. O lançamento em mainnet está no roadmap, junto com a integração do Pix pra brasileiros e yield, pra que o saldo renda enquanto está comprometido."
+  - question: "O que é um MOAI?"
+    answer: "MOAI é uma tradição brasileira de poupança em grupo: várias pessoas combinam de juntar um valor fixo todo mês, e a cada ciclo um membro recebe o valor cheio (subsidiado pelos outros). É de boca a boca e não regulado. O SafeNudge mantém o compromisso social, mas troca a confiança verbal por regras onchain."
+  - question: "Por que Solana, e não Base ou Ethereum?"
+    answer: "Dois motivos: o custo de transação na Solana é baixíssimo (essencial quando o grupo faz vários depósitos pequenos), e o modelo de programa em Rust foi a aposta certa pra carreira. Eu construí o BaseVault na Base primeiro pra comparar, e a Solana ganhou no custo."
+---
+
+
+# Criando o SafeNudge: meu primeiro app onchain na Solana
+
+Percebendo a partir do meu grupo de amigos no [GymRats](https://www.gymrats.app/) como competição e uma pitada de pressão social fazem com que as pessoas se dediquem mais pra um objetivo, eu pensei em unir isso a tecnologia e educação financeira, nascendo então o SafeNudge: meu primeiro app real feito na blockchain da Solana, onde você entra em um grupo com o objetivo de incentivar um ao outro a guardar dinheiro! Construído em Rust, rodando na Solana e inspirado na tradição brasileira do MOAI.
+
+## Introdução
+
+Eu sempre tive uma história pessoal com educação financeira. Na minha família não foi comum falar de finanças e fazer planejamento financeiro e eu tive que ir aprendendo por conta própria como cuidar do meu dinheiro de forma responsável e consciente. Então é natural que meu primeiro projeto real fosse relacionado a isso.
+Pra dar mais contexto: eu sou desenvolvedor há mais de 10 anos, na maior parte da carreira fazendo desenvolvimento Web (e muita coisa junto com isso). Há quase dois anos eu trabalho na Coinbase, uma das maiores corretoras de cripto do mundo, o que me fez me aproximar cada vez mais da tecnologia e ambiente blockchain, e juntando com um desejo recente de empreender e criar, uni várias coisas que me interessam num lugar só.
+
+## Por que Solana?
+
+Depois de passar algum tempo estudando, fiz alguns projetos de estudo pra me ambientar na EVM e na Solana. Primeiro, fiz o [BaseVault](https://github.com/davigiroux/BaseVault), um webapp na Base com Yield na Aave, um Vault simples mas que me deu introduções de Solidity e alguns conceitos da blockchain como um todo. E depois fiz o [SolEscrow](https://github.com/davigiroux/sol-escrow), um escrow em Solana, com Rust, pra aprender os conceitos dos programas Solana. Percebi uma dificuldade enorme em Rust comparado com Solidity, mas foi super divertido.
+Tendo essas duas experiências, duas coisas me fizeram escolher fazer o SafeNudge em Solana: o baixíssimo custo de transação, e a linguagem Rust. O custo fala por si só, mas a linguagem foi uma decisão mais voltada pra carreira. Rust é uma linguagem utilizada não só no meio cripto, mas em vários ecossistemas diferentes, e essa versatilidade poderia se traduzir em experiência pra outras áreas, caso eu não seguisse mais em cripto. A linguagem em si traz muitos conceitos diferentes do que eu me acostumei comparando com Go, a linguagem com que venho trabalhando mais no backend nos últimos anos. Rust traz uma bagagem de sintaxe e paradigmas bem mais robustos e complexos. No final das contas, o que pesou mesmo foi o próprio desafio de uma linguagem mais difícil, a grande adoção na indústria de software, e o enorme potencial que aprender essa linguagem podia trazer pra minha carreira no futuro.
+Some-se a isso que, de todas as comunidades blockchain, a Solana foi a que me pareceu mais viva e cooperativa, me juntar à [Superteam Brasil](https://www.superteam.com.br/en) tem sido divertido e ver a quantidade de talento que temos aqui é tanto intimidador como incentivador.
+
+## O que é o SafeNudge?
+
+O SafeNudge é um app de poupança em grupo na Solana — amigos se comprometem a guardar dinheiro juntos, e a blockchain garante as regras.
+
+Como falei no início, o [SafeNudge](https://www.safenudge.xyz/) partiu da minha vontade de fazer algo pra ajudar o brasileiro (principalmente) a guardar mais dinheiro, e de quebra se expor um pouco a cripto, que ainda tem uma reputação bem prejudicada e/ou desconhecida no país. O GymRats ganhou enorme popularidade incentivando as pessoas a fazerem mais atividades físicas através da competição entre amigos e estímulo social de mostrar pra todos que você tá levando a disputa a sério!
+Também uso o fato de MOAIs serem bem comuns entre brasileiros, a prática de que um grupo combina juntar um valor X, você paga uma parcela desse valor todo mês, e na duração do acordo, cada mês alguém do grupo é sorteado com o valor cheio (subsidiado pelo restante do grupo). Existem variações nas regras de juros, sorteio, multa etc. que não são tão claras, algo que o SafeNudge vem pra tentar simplificar.
+Outro paralelo são os consórcios, que já são regulamentados e geralmente feitos por bancos ou instituições financeiras. Na maioria esmagadora das vezes, você troca o MOAI de boca a boca, não regulamentado, e confiança no organizador e no grupo todo pela segurança e regras do consórcio, mas com o contra de ter taxas abusivas, spreads não comunicados claramente, e reajustes injustos que o cliente muitas vezes nem tem ideia de como calcular. O SafeNudge vem com a proposta de ter a segurança da descentralização, onde os administradores do aplicativo não tem poder algum sobre o dinheiro do grupo, e o código é 100% aberto comprovando onde vai o dinheiro, além do fato da blockchain ser pública, e qualquer auditoria pode ser feita por literalmente qualquer pessoa, já que todas as transações e movimentações são expostas. Está no roadmap a integração de yield (ou rendimento, em português), permitindo que além do benefício do desenvolvimento do hábito de poupar, as pessoas também tenham rendimentos reais, sem taxas abusivas. 
+
+### Como funciona?
+Você define o seu grupo com seus amigos, cada um fica responsável de criar uma carteira cripto (está no roadmap simplificar o processo, pra que pessoas não familiarizadas com cripto tenham a facilidade de participar sem precisar anotar seed phrases e manter uma carteira com tokens), o administrador do grupo (não confundir com administrador do app) define o tempo de contribuição, o intervalo de tempo entre depósitos, o valor, e compartilha o código do grupo.
+Aí, a cada ciclo o sistema vai te lembrar de fazer o depósito, quem não honra o compromisso sofre penalidade, que vai ser descontada no final do compromisso inteiro e distribuída entre os integrantes do grupo, e também é nesse momento que o sistema recolhe uma taxa da distribuição. O principal de quem cumpriu o combinado não tem descontos.
+
+## Desafios na implementação
+A parte web foi tranquila, afinal é a stack que eu mais tenho experiência, então o desafio mesmo foi manter a parte onchain. Não só criar, mas garantir que edge cases sejam cobertos o máximo possível, ao mesmo tempo, garantir que, enquanto eu implementava uma linguagem até agora bem desconhecida, o fizesse de forma correta e eficiente. A parte que mais gastei tempo foi em manter as versões do Anchor, Solana etc. compatíveis na minha CI, e garantir que os testes rodem e representem as ações reais a cada commit e PR.
+A experiência foi muito curiosa, hoje com as ferramentas de IA é muito tentador só escrever o prompt para o problema que você quer resolver e torcer pra tudo dar certo no final. Eu fazia questão de separar o desenvolvimento em pequenas partes validáveis e testáveis durante todo o processo, lendo atentamente o código produzido e revisando, mas confesso que não é a mesma coisa que eu mesmo escrever. O aprendizado ainda é algo que eu tento decifrar pra aproveitar o máximo da produtividade da IA enquanto aprendo novas habilidades e técnicas.
+
+## Conclusão
+
+A ideia inicial desse projeto era lançar no [Colosseum Hackathon](https://colosseum.com/hackathon/), mas com tanta coisa acontecendo com filho pequeno, trabalho na Coinbase, tentando se manter ativo na corrida, e simplesmente a vida acontecendo, os updates não foram tão frequentes quanto eu gostaria e não consegui divulgar o projeto como o Hackathon merecia. De qualquer forma, é um trabalho que eu tenho muito carinho. É uma ideia que se tornou algo palpável e de que eu me orgulho de ter feito, mesmo que não tenha servido ao objetivo original do Hackathon. Uma das minhas metas desse ano é lançar algo pra eu me dar o direito de me chamar ["founder"](/pt-br/blog/beyond-the-paycheck-why-i-decided-to-take-the-wheel-of-my-career), esse pode muito bem ter sido o primeiro passo de fato pra isso. Meu desejo é que daqui pra frente eu consiga crescer ou o SafeNudge, ou qualquer outro projeto meu, como uma forma de provar pra mim mesmo que eu tenho o que é preciso pra empreender e criar meu negócio.
+
+### O que vem aí para o SafeNudge?
+Algumas coisas estão bem claras sobre o que eu quero pro app:
+1. Pix on-ramp
+	Eu não escondi desde o começo que o maior foco do projeto é para que brasileiros aprendam a guardar dinheiro e desenvolvam esse hábito que pode mudar a vida de uma família. E se falamos de finanças brasileiras, precisamos incluir o Pix. É algo que já estudo implementar pra que torne o sistema ainda mais acessível pra todos.
+2. Mainnet
+	O SafeNudge ainda está em fases de testes na devnet, mas quero muito em breve fazer o lançamento na mainnet pra que todos possam participar. Quero garantir a segurança e viabilidade do negócio antes de fazer o anúncio oficial, mas tudo indica que teremos #NovidadesEmBreve.
+3. Yield (rendimento)
+	 Um dos meus principais objetivos é incluir yield pra que além do incentivo social, tenha um incentivo monetário real pra que as pessoas sejam estimuladas a guardar. Faz parte tanto do projeto final como da viabilidade financeira do projeto, já que é do rendimento que o sistema vai ter seu principal retorno, além da taxa sobre penalidades. Ainda estou estudando a melhor forma de implementar de forma prática, segura, e que seja vantajosa para os usuários, mas é sim uma feature primordial pro sucesso do SafeNudge.
+
+Tem sido uma experiência muito marcante pra mim, algo completamente novo e inexplorado. Espero poder voltar aqui e contar os futuros sucessos dessa empreitada, ou pelo menos compartilhar grandes aprendizados da jornada, que já vai ser de um valor gigante!
+
+---
+
+*Se quiser mais contexto sobre o que me fez começar a escrever aqui, dá uma olhada em [O que me motivou a criar este blog](/pt-br/blog/what-made-me-create-this-blog).*

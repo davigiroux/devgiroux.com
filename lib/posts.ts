@@ -86,6 +86,11 @@ function findPostFile(slug: string, locale: Locale): PostFileInfo | null {
   return null
 }
 
+export interface FaqItem {
+  question: string
+  answer: string
+}
+
 export interface PostFrontmatter {
   title: string
   date: string
@@ -95,6 +100,7 @@ export interface PostFrontmatter {
   draft?: boolean
   featured?: boolean
   lang?: Locale
+  faq?: FaqItem[]
 }
 
 export interface Post {

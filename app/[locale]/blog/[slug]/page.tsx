@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { setRequestLocale } from 'next-intl/server';
-import { getPostBySlug, getAllSlugs } from '@/lib/posts';
+import { getPostBySlug, getAllSlugs, type Post, type PostFrontmatter } from '@/lib/posts';
 import { compileMDXContent } from '@/lib/mdx';
 import { ArticleHeader } from '@/components/blog/article-header';
 import { TableOfContents } from '@/components/blog/table-of-contents';
@@ -119,6 +119,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               {content}
             </article>
 
+            {post.frontmatter.faq && post.frontmatter.faq.length > 0 && (
+              <section className="article-content mt-12 max-w-none">
+                <h2>FAQ</h2>
+                {post.frontmatter.faq.map((item, idx) => (
+                  <div key={idx}>
+                    <h3>{item.question}</h3>
+                    <p>{item.answer}</p>
+                  </div>
+                ))}
+              </section>
+            )}
+
             {/* Three-dot section break */}
             <div className="my-12 text-center text-2xl tracking-[1em] text-muted-foreground/40 select-none">
               &middot;&middot;&middot;
@@ -150,35 +162,55 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
       </div>
 
-      {/* JSON-LD Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'BlogPosting',
-            headline: post.frontmatter.title,
-            description: post.frontmatter.description,
-            image: post.frontmatter.coverImage || `${siteConfig.url}/og-image.png`,
-            datePublished: post.frontmatter.date,
-            inLanguage: locale,
-            author: {
-              '@type': 'Person',
-              name: siteConfig.author.name,
-            },
-            publisher: {
-              '@type': 'Organization',
-              name: siteConfig.name,
-              logo: {
-                '@type': 'ImageObject',
-                url: `${siteConfig.url}/logo.png`,
-              },
-            },
-            keywords: post.frontmatter.tags.join(', '),
-            url,
-          }),
-        }}
-      />
+      <JsonLd data={blogPostingSchema(post, url, locale)} />
+      {post.frontmatter.faq && post.frontmatter.faq.length > 0 && (
+        <JsonLd data={faqPageSchema(post.frontmatter.faq)} />
+      )}
     </div>
   );
+}
+
+function JsonLd({ data }: { data: unknown }) {
+  // Escape '<' to prevent script-tag breakout if any author-controlled
+  // string contained '</script>' (canonical Next.js JSON-LD pattern).
+  const safe = JSON.stringify(data).replace(/</g, '\\u003c');
+  return (
+    <script
+      type="application/ld+json"
+      // eslint-disable-next-line react/no-danger
+      dangerouslySetInnerHTML={{ __html: safe }}
+    />
+  );
+}
+
+function blogPostingSchema(post: Post, url: string, locale: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.frontmatter.title,
+    description: post.frontmatter.description,
+    image: post.frontmatter.coverImage || `${siteConfig.url}/og-image.png`,
+    datePublished: post.frontmatter.date,
+    inLanguage: locale,
+    author: { '@type': 'Person', name: siteConfig.author.name },
+    publisher: {
+      '@type': 'Organization',
+      name: siteConfig.name,
+      logo: { '@type': 'ImageObject', url: `${siteConfig.url}/logo.png` },
+    },
+    keywords: post.frontmatter.tags.join(', '),
+    url,
+  };
+}
+
+function faqPageSchema(faq: NonNullable<PostFrontmatter['faq']>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: item.answer },
+    })),
+  };
 }

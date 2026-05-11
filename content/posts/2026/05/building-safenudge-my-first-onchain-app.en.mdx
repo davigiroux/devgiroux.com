@@ -1,0 +1,80 @@
+---
+title: "Building SafeNudge: my first onchain app on Solana"
+date: "2026-05-09"
+description: "How I built SafeNudge on Solana with Rust — my first onchain app: a group savings dApp inspired by Brazilian MOAIs. Story, stack choices, lessons."
+tags: ["web3", "onchain", "solana", "project", "rust", "savings"]
+coverImage: "/images/blog/building-safenudge-my-first-onchain-app.png"
+draft: false
+featured: false
+lang: "en"
+faq:
+  - question: "What is SafeNudge?"
+    answer: "SafeNudge is a group savings app on Solana. You and your friends commit to saving together, and the blockchain enforces the rules — deposits, schedule, and penalties for missing a cycle."
+  - question: "Is SafeNudge live? Can I use it now?"
+    answer: "Not on mainnet yet — the app is currently in testing on Solana's devnet. Mainnet launch is on the roadmap, alongside a Pix on-ramp for Brazilian users and yield integration so balances earn while they're committed."
+  - question: "What is a MOAI?"
+    answer: "A MOAI is a Brazilian savings tradition where a group pools a fixed amount each month, and one member receives the full pot per cycle (subsidized by the rest). It's word-of-mouth and unregulated. SafeNudge keeps the social commitment but replaces the verbal trust with onchain rules."
+  - question: "Why Solana instead of Base or Ethereum?"
+    answer: "Two reasons: Solana's transaction costs are dirt-cheap (essential when groups make frequent small deposits), and the program model in Rust was the career-aligned learning bet. I built BaseVault on Base first to compare, and Solana won on cost."
+---
+
+# Building SafeNudge: my first onchain app on Solana
+
+Watching my friends in [GymRats](https://www.gymrats.app/) push themselves harder thanks to a bit of competition and social pressure, I started thinking about combining that with technology and financial education. That's how SafeNudge was born: my first real app built on the Solana blockchain, where you join a group of people who nudge each other into saving money! Built in Rust, deployed on Solana, and inspired by the Brazilian MOAI savings tradition.
+
+## Introduction
+
+I've always had a personal history with financial education. In my family, talking about money and doing financial planning wasn't really a thing, so I had to learn on my own how to handle my money responsibly and consciously. So it's no surprise that my first real project would be related to that.
+
+For more context: I've been a developer for over 10 years, mostly doing web development (and a lot of stuff alongside it). For almost two years now I've been working at Coinbase, one of the biggest crypto exchanges in the world, which got me closer and closer to blockchain tech and the broader ecosystem. Combined with a recent itch to build and start something, I ended up bringing several things I care about into one place.
+
+## Why Solana?
+
+After spending some time studying, I built a few learning projects to get familiar with both the EVM and Solana. First, I built [BaseVault](https://github.com/davigiroux/BaseVault), a webapp on Base with yield via Aave — a simple vault, but it gave me an intro to Solidity and some general blockchain concepts. Then I built [SolEscrow](https://github.com/davigiroux/sol-escrow), a Solana escrow in Rust, to learn the concepts behind Solana programs. I found Rust way harder than Solidity, but it was a lot of fun.
+
+With those two experiences under my belt, two things made me choose Solana for SafeNudge: the dirt-cheap transaction costs, and the Rust language itself. The cost speaks for itself, but picking the language was more of a career decision. Rust isn't only used in crypto — it shows up across many ecosystems, and that versatility could translate into experience for other areas if I ever stepped away from crypto. The language itself brings a lot of concepts that are different from what I'm used to with Go, the language I've been working with the most on the backend over the last few years. Rust comes with much more robust and complex syntax and paradigms. In the end, what tipped the scale was the challenge of a harder language, the broad adoption across the software industry, and the huge potential it could bring to my career down the line.
+
+On top of that, out of all the blockchain communities, Solana felt the most alive and cooperative to me. Joining [Superteam Brasil](https://www.superteam.com.br/en) has been fun, and seeing how much talent we have here is both intimidating and motivating.
+
+## What is SafeNudge?
+
+SafeNudge is a group savings app on Solana — friends commit to saving together, and the blockchain enforces the rules.
+
+As I mentioned at the start, [SafeNudge](https://www.safenudge.xyz/) came from my desire to build something that helps Brazilians (mainly) save more money and, while at it, get a little exposure to crypto — which still has a pretty damaged or unfamiliar reputation in the country. GymRats took off by encouraging people to be more physically active through friendly competition and the social push of showing everyone you're taking the challenge seriously!
+
+I'm also building on something pretty common among Brazilians: MOAIs — a practice where a group agrees to pool a certain amount, you pay your share every month, and over the duration of the agreement, each month one person is drawn to receive the full amount (subsidized by the rest of the group). There are variations in the rules around interest, draws, penalties, etc. that aren't always clear — something SafeNudge tries to simplify.
+
+*Consórcios* are another parallel, and they are already regulated and usually run by banks or financial institutions. Most of the time, you trade off the MOAI's word-of-mouth, unregulated nature and trust in the organizer and group for the safety and rules of a *consórcio* — but the downside is abusive fees, spreads that aren't clearly communicated, and unfair adjustments that the customer often has no idea how to calculate. SafeNudge offers the safety of decentralization, where the app's admins have zero power over the group's money, and the code is 100% open, showing where the money goes — plus the blockchain is public, so any audit can be done by literally anyone, since every transaction and movement is exposed. Yield integration is on the roadmap, so beyond the benefit of building the saving habit, people will also get real returns, with no abusive fees.
+
+### How does it work?
+
+You set up your group with your friends. Each person is responsible for creating a crypto wallet (simplifying this process is on the roadmap, so people unfamiliar with crypto can join without having to write down seed phrases and manage a wallet with tokens). The group admin (not to be confused with the app admin) sets the contribution period, the interval between deposits, the amount, and shares the group code.
+
+From there, every cycle the system reminds you to make your deposit. Whoever doesn't honor the commitment gets penalized — that penalty is deducted at the end of the whole commitment and distributed among the group members, and it's also at this point that the system collects a fee from the distribution. The principal of those who kept their end of the deal isn't touched.
+
+## Implementation challenges
+
+The web side was smooth, since it's the stack I have the most experience with — so the real challenge was the onchain side. Not just building it, but making sure edge cases were covered as much as possible, while also making sure that, as I implemented a language I barely knew, I was doing it correctly and efficiently. The part I spent the most time on was keeping the Anchor, Solana, etc. versions compatible in my CI, and making sure the tests run and represent real actions on every commit and PR.
+
+The experience was interesting — these days, with AI tools, it's tempting to just write a prompt for the problem you want to solve and hope everything works out in the end. I made a point of breaking development into small, validatable, testable chunks throughout the process, reading the produced code carefully and reviewing it. But I'll admit it's not the same as writing it myself. Figuring out how to get the most out of AI's productivity while still picking up new skills and techniques is something I'm still trying to crack.
+
+## Conclusion
+
+The original plan for this project was to launch it at the [Colosseum Hackathon](https://colosseum.com/hackathon/), but with so much going on — a small kid, my job at Coinbase, trying to stay active with running, and life happening in general — the updates weren't as frequent as I'd like, and I couldn't promote the project the way the Hackathon deserved. Either way, it's a piece of work I care about. It's an idea that became something tangible, something I'm proud of having built, even if it didn't serve the Hackathon's original goal. One of my goals this year is to launch something that earns me the right to call myself a ["founder"](/blog/beyond-the-paycheck-why-i-decided-to-take-the-wheel-of-my-career) — this might very well have been the actual first step toward that. My hope is that from here on out, I can grow either SafeNudge or any other project of mine, as a way to prove to myself that I have what it takes to build a business of my own.
+
+### What's next for SafeNudge?
+
+A few things are pretty clear about what I want for the app:
+
+1. Pix on-ramp
+	I haven't hidden from the start that the project's main focus is helping Brazilians learn to save money and develop a habit that can change a family's life. And if we're talking Brazilian finance, we need to include Pix. It's something I'm already studying how to implement, to make the system even more accessible to everyone.
+2. Mainnet
+	SafeNudge is still in the testing phase on devnet, but I want to launch on mainnet soon so everyone can join. I want to make sure the security and viability of the business are solid before the official announcement, but everything points to #SoonTM news on this front.
+3. Yield
+	One of my main goals is to add yield, so that beyond the social incentive, there's a real monetary incentive to encourage people to save. It's both part of the final vision and the financial viability of the project, since yield is where the system gets its main return, on top of the fee on penalties. I'm still figuring out the best way to implement it in a way that's practical, secure, and beneficial for users — but yes, it's a feature that's essential to SafeNudge's success.
+
+It's been a meaningful experience for me — something completely new. I hope to come back here and share the future wins of this venture, or at least share big lessons from the journey, which will already be hugely valuable!
+
+---
+
+*If you'd like more context on what got me writing here in the first place, see [What made me create this blog](/blog/what-made-me-create-this-blog).*
