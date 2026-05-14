@@ -139,11 +139,14 @@ export default async function HomePage({ params }: HomePageProps) {
             </p>
             <div className="mb-12 h-px bg-border animate-draw-line" />
 
-            <p className="max-w-3xl text-lg leading-loose">
+            <p className="max-w-3xl text-lg leading-loose break-words">
               {tags.map(({ tag, count }, i) => (
                 <span key={tag}>
                   {i > 0 && (
-                    <span className="mx-2 text-muted-foreground/30 select-none">/</span>
+                    <>
+                      {' '}
+                      <span className="text-muted-foreground/30 select-none">/</span>{' '}
+                    </>
                   )}
                   <Link
                     href={`/tag/${encodeURIComponent(tag)}`}
