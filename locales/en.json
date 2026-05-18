@@ -2,7 +2,8 @@
   "nav": {
     "home": "Home",
     "about": "About",
-    "blog": "Blog"
+    "blog": "Blog",
+    "projects": "Projects"
   },
   "hero": {
     "title1": "Building, Learning,",
@@ -74,6 +75,42 @@
     "linkedin": "Share on LinkedIn",
     "copyLink": "Copy link",
     "copied": "Copied!"
+  },
+  "projects": {
+    "pageTitle": "Projects",
+    "pageDescription": "Projects I'm building in public across EVM and Solana — onchain apps, DeFi tooling, and developer infrastructure.",
+    "hero": {
+      "label": "PROJECTS",
+      "title": "Projects",
+      "tagline": "Building in public across EVM and Solana",
+      "description": "A running list of things I'm shipping — onchain apps, DeFi experiments, and developer tools. Some are live, some are deployed to testnets, all are open source."
+    },
+    "list": {
+      "label": "WHAT I'M BUILDING"
+    },
+    "links": {
+      "code": "Code",
+      "visit": "Visit",
+      "readPost": "Read the post"
+    },
+    "items": {
+      "safenudge": {
+        "description": "Group savings protocol on Solana. Friends commit to saving together; the blockchain enforces deposits, schedule, and penalties. Inspired by Brazilian MOAIs.",
+        "status": "Live on devnet"
+      },
+      "basevault": {
+        "description": "DeFi yield vault on Base. Deposits earn yield via Aave v3. Built with Solidity/Foundry, 100% test coverage, wagmi v2/viem v2 frontend.",
+        "status": "Deployed on Base Sepolia"
+      },
+      "flagkit": {
+        "description": "Self-hostable feature flag service. Go API with Redis caching, React/TypeScript dashboard, TypeScript SDK published to npm.",
+        "status": "npm"
+      },
+      "solescrow": {
+        "description": "Anchor escrow program on Solana devnet. Learning project covering PDAs, CPIs, and SPL token transfers.",
+        "status": "Live on devnet"
+      }
+    }
   },
   "about": {
     "pageTitle": "About",

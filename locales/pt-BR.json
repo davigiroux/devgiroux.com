@@ -2,7 +2,8 @@
   "nav": {
     "home": "Início",
     "about": "Sobre",
-    "blog": "Blog"
+    "blog": "Blog",
+    "projects": "Projetos"
   },
   "hero": {
     "title1": "Construindo, Aprendendo,",
@@ -74,6 +75,42 @@
     "linkedin": "Compartilhar no LinkedIn",
     "copyLink": "Copiar link",
     "copied": "Copiado!"
+  },
+  "projects": {
+    "pageTitle": "Projetos",
+    "pageDescription": "Projetos que estou construindo em público em EVM e Solana — apps onchain, ferramentas DeFi e infraestrutura para desenvolvedores.",
+    "hero": {
+      "label": "PROJETOS",
+      "title": "Projetos",
+      "tagline": "Construindo em público em EVM e Solana",
+      "description": "Uma lista corrente das coisas que estou lançando — apps onchain, experimentos em DeFi e ferramentas pra desenvolvedores. Alguns estão no ar, outros em testnets, todos são open source."
+    },
+    "list": {
+      "label": "O QUE ESTOU CONSTRUINDO"
+    },
+    "links": {
+      "code": "Código",
+      "visit": "Acessar",
+      "readPost": "Ler o post"
+    },
+    "items": {
+      "safenudge": {
+        "description": "Protocolo de poupança em grupo na Solana. Amigos se comprometem a poupar juntos; o blockchain impõe depósitos, cronograma e penalidades. Inspirado nos MOAIs brasileiros.",
+        "status": "No ar na devnet"
+      },
+      "basevault": {
+        "description": "Vault de yield DeFi na Base. Depósitos rendem via Aave v3. Construído com Solidity/Foundry, 100% de cobertura de testes, frontend com wagmi v2/viem v2.",
+        "status": "Deployado na Base Sepolia"
+      },
+      "flagkit": {
+        "description": "Serviço de feature flags self-hostable. API em Go com cache Redis, dashboard em React/TypeScript, SDK TypeScript publicado no npm.",
+        "status": "npm"
+      },
+      "solescrow": {
+        "description": "Programa de escrow em Anchor na devnet da Solana. Projeto de aprendizado cobrindo PDAs, CPIs e transferências de SPL tokens.",
+        "status": "No ar na devnet"
+      }
+    }
   },
   "about": {
     "pageTitle": "Sobre",
