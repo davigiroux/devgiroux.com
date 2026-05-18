@@ -40,6 +40,7 @@ export function Header() {
     { href: "/", label: t("home") },
     { href: "/about", label: t("about") },
     { href: "/blog", label: t("blog") },
+    { href: "/projects", label: t("projects") },
   ]
 
   const switchLocale = (newLocale: Locale) => {
