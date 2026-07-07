@@ -15,6 +15,7 @@ export const siteConfig = {
     instagram: "https://instagram.com/devgiroux",
     youtube: "https://youtube.com/@devgiroux",
     github: "https://github.com/davigiroux",
+    linkedin: "https://www.linkedin.com/in/davi-giroux",
   },
   // Giscus configuration - update after setting up your GitHub repo
   giscus: {

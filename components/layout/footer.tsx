@@ -10,6 +10,7 @@ const socialLinks = [
   { href: siteConfig.links.instagram, label: "Instagram" },
   { href: siteConfig.links.youtube, label: "YouTube" },
   { href: siteConfig.links.github, label: "GitHub" },
+  { href: siteConfig.links.linkedin, label: "LinkedIn" },
 ]
 
 export function Footer() {

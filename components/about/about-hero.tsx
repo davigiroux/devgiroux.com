@@ -11,6 +11,7 @@ export function AboutHero() {
     { name: 'Twitter', url: siteConfig.links.twitter },
     { name: 'Instagram', url: siteConfig.links.instagram },
     { name: 'YouTube', url: siteConfig.links.youtube },
+    { name: 'LinkedIn', url: siteConfig.links.linkedin },
   ];
 
   return (
